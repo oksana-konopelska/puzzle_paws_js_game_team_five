@@ -1,5 +1,3 @@
-
-
 const IMAGE_PATH = "assets/animals";
 const FLIP_BACK_DELAY_MS = 600;
 const CORRECT_DELAY_MS = 1000;
@@ -40,7 +38,7 @@ const gameState = {
   hideTimeoutIds: [],
 };
 
-console.log(gameState.cards)
+console.log(gameState.cards);
 
 const bestRecords = {
   moves: null,
@@ -68,18 +66,22 @@ function startGame() {
   // Reset game state and cancel pending timers.
   // Create, shuffle and render a new deck.
   // Keep the saved best records.
-  gameState.cards = shuffle(CARD_NAMES);
-
+  gameState.cards = createDeck(CARD_NAMES);
+  shuffle(gameState.cards);
 }
-
 
 function createDeck(names) {
   const cards = [];
   let id = 1;
-  for(let i = 0; i < names.length; i++){
-   
-    for (let j = 0; j < 2; j++){
-      cards.push({id: id++, name: names[i], isMatched: false, isFlipped: false, isHidden: false });
+  for (let i = 0; i < names.length; i++) {
+    for (let j = 0; j < 2; j++) {
+      cards.push({
+        id: id++,
+        name: names[i],
+        isMatched: false,
+        isFlipped: false,
+        isHidden: false,
+      });
     }
   }
   return cards;
@@ -176,14 +178,13 @@ function finishGame() {
 function init() {
   // show this modal when the window loads for the first time
   showWelcomeModal();
-  startGame(); 
-  welcomeModal.addEventListener('click', closeWelcomeModal);
-  document.addEventListener('keydown', closeWelcomeModal);
+  startGame();
+  welcomeModal.addEventListener("click", closeWelcomeModal);
+  document.addEventListener("keydown", closeWelcomeModal);
 
   // Load saved records.
   // Register event listeners.
   // Start the game.
-  
 }
 
 init();
@@ -204,13 +205,14 @@ function showWelcomeModal() {
 function closeWelcomeModal(event) {
   // change the welcome modal visibility to hidden
   console.log(event.key);
-  if (event.target === welcomeModal || event.target === closeWelcomeButton || event.key === 'Escape') {
+  if (
+    event.target === welcomeModal ||
+    event.target === closeWelcomeButton ||
+    event.key === "Escape"
+  ) {
     welcomeModal.classList.remove("open-modal");
   }
-
 }
-
-
 
 // showStatsModal();
 

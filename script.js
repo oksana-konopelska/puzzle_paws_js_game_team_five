@@ -149,25 +149,71 @@ function finishGame() {
 }
 
 function init() {
-  // show this modal when the window loads for the first time
-  showWelcomeModal();
-  welcomeModal.addEventListener('click', closeWelcomeModal);
-  document.addEventListener('keydown', closeWelcomeModal);
+
+  // -----------------------------------
+  // First-time player check
+  // Comment out this entire block if you
+  // want the welcome modal to always open
+  // while testing.
+  // -----------------------------------
+
+  const savedName = loadPlayerName();
+
+  // for loading the game withsaved name (welcome modal does not show on page reload)
+  if (savedName) {
+    // save player name in global variable
+    playerName = savedName;
+
+    // update the player name in the header
+    document.getElementById("player-name").textContent =
+      savedName;
+  } else {
+    // no saved player found
+    // show welcome modal
+    showWelcomeModal();
+  }
+
+  // for testing without saved name (welcome modal shows on page reload)
+    // showWelcomeModal();
 
 
+  // -----------------------------------
+  // End first-time player check
+  // -----------------------------------
+
+  welcomeModelDiv.addEventListener(
+    "click",
+    closeWelcomeModal
+  );
+
+  // handle welcome form submission
+  const welcomeForm =
+    document.getElementById("modal-form");
+
+  welcomeForm.addEventListener(
+    "submit",
+    handleWelcomeSubmit
+  );
 
   // Load saved records.
+
   // Register event listeners.
+
   // Start the game.
 }
-
 init();
 
 // Build loadPlayerName(), savePlayerName(name), showWelcomeModal(), closeWelcomeModal(), handleWelcomeSubmit(event)
 
 // loadPlayerName();
+function loadPlayerName() {
+  return localStorage.getItem(PLAYER_KEY);
+}
 
 // savePlayerName(name);
+function savePlayerName(name) {
+  localStorage.setItem(PLAYER_KEY, name);
+}
 
 function showWelcomeModal() {
   // show welcome
@@ -182,15 +228,29 @@ function closeWelcomeModal(event) {
   if (event.target === welcomeModal || event.target === closeWelcomeButton || event.key === 'Escape') {
     welcomeModal.classList.remove("open-modal");
   }
-
 }
-
-
 
 // showStatsModal();
 
 // closeStatsModal();
 
-// handleWelcomeSubmit(event) {
+function handleWelcomeSubmit(event) {
+  event.preventDefault();
 
-// };
+  const input = document.getElementById("player-input");
+
+  const name = input.value.trim();
+
+  if (!name) {
+    alert("Please enter your name");
+    return;
+  }
+
+  savePlayerName(name);
+
+  document.getElementById("player-name").textContent = name;
+
+  welcomeModal.classList.remove("open-modal");
+
+  startGame();
+}

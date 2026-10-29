@@ -68,6 +68,7 @@ function startGame() {
   // Keep the saved best records.
   gameState.cards = createDeck(CARD_NAMES);
   shuffle(gameState.cards);
+  console.log(gameState.cards)
 }
 
 function createDeck(names) {
@@ -89,7 +90,15 @@ function createDeck(names) {
 
 function shuffle(array) {
   // Randomize the array in place.
+
+  for (let i = array.length -1; i > 0; i--){
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array [j], array[i]];
+  }
+
 }
+
+
 
 // ## Cards and rendering
 

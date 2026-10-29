@@ -1,5 +1,3 @@
-
-
 const IMAGE_PATH = "assets/animals";
 const FLIP_BACK_DELAY_MS = 600;
 const CORRECT_DELAY_MS = 1000;
@@ -40,7 +38,7 @@ const gameState = {
   hideTimeoutIds: [],
 };
 
-console.log(gameState.cards)
+console.log(gameState.cards);
 
 const bestRecords = {
   moves: null,
@@ -69,17 +67,20 @@ function startGame() {
   // Create, shuffle and render a new deck.
   // Keep the saved best records.
   gameState.cards = shuffle(CARD_NAMES);
-
 }
-
 
 function createDeck(names) {
   const cards = [];
   let id = 1;
-  for(let i = 0; i < names.length; i++){
-   
-    for (let j = 0; j < 2; j++){
-      cards.push({id: id++, name: names[i], isMatched: false, isFlipped: false, isHidden: false });
+  for (let i = 0; i < names.length; i++) {
+    for (let j = 0; j < 2; j++) {
+      cards.push({
+        id: id++,
+        name: names[i],
+        isMatched: false,
+        isFlipped: false,
+        isHidden: false,
+      });
     }
   }
   return cards;
@@ -173,40 +174,24 @@ function finishGame() {
   // Display the success message and handle the final records.
 }
 
+
 function init() {
+  // always show the welcome modal
+  showWelcomeModal();
 
-  // -----------------------------------
-  // First-time player check
-  // Comment out this entire block if you
-  // want the welcome modal to always open
-  // while testing.
-  // -----------------------------------
-
+  // load any previously saved player name
   const savedName = loadPlayerName();
 
-  // for loading the game withsaved name (welcome modal does not show on page reload)
+  // display saved player name if one exists
   if (savedName) {
-    // save player name in global variable
     playerName = savedName;
 
-    // update the player name in the header
     document.getElementById("player-name").textContent =
       savedName;
-  } else {
-    // no saved player found
-    // show welcome modal
-    showWelcomeModal();
   }
 
-  // for testing without saved name (welcome modal shows on page reload)
-    // showWelcomeModal();
-
-
-  // -----------------------------------
-  // End first-time player check
-  // -----------------------------------
-
-  welcomeModelDiv.addEventListener(
+  // allow modal to be closed
+  welcomeModal.addEventListener(
     "click",
     closeWelcomeModal
   );
@@ -225,33 +210,31 @@ function init() {
   // Register event listeners.
 
   // Start the game.
-  
 }
 init();
 
-// Build loadPlayerName(), savePlayerName(name), showWelcomeModal(), closeWelcomeModal(), handleWelcomeSubmit(event)
 
-// loadPlayerName();
+
 function loadPlayerName() {
   return localStorage.getItem(PLAYER_KEY);
 }
 
-// savePlayerName(name);
+
 function savePlayerName(name) {
   localStorage.setItem(PLAYER_KEY, name);
 }
 
 function showWelcomeModal() {
-  // show welcome
-  // grab the modal by id
-  // change the visibility to visible
   welcomeModal.classList.add("open-modal");
 }
 
 function closeWelcomeModal(event) {
-  // change the welcome modal visibility to hidden
   console.log(event.key);
-  if (event.target === welcomeModal || event.target === closeWelcomeButton || event.key === 'Escape') {
+  if (
+    event.target === welcomeModal ||
+    event.target === closeWelcomeButton ||
+    event.key === "Escape"
+  ) {
     welcomeModal.classList.remove("open-modal");
   }
 }
@@ -261,10 +244,10 @@ function closeWelcomeModal(event) {
 // closeStatsModal();
 
 function handleWelcomeSubmit(event) {
+
   event.preventDefault();
 
   const input = document.getElementById("player-input");
-
   const name = input.value.trim();
 
   if (!name) {
@@ -275,7 +258,6 @@ function handleWelcomeSubmit(event) {
   savePlayerName(name);
 
   document.getElementById("player-name").textContent = name;
-
   welcomeModal.classList.remove("open-modal");
 
   startGame();

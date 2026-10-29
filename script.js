@@ -66,7 +66,8 @@ function startGame() {
   // Reset game state and cancel pending timers.
   // Create, shuffle and render a new deck.
   // Keep the saved best records.
-  gameState.cards = shuffle(CARD_NAMES);
+  gameState.cards = createDeck(CARD_NAMES);
+  shuffle(gameState.cards);
 }
 
 function createDeck(names) {
@@ -174,10 +175,18 @@ function finishGame() {
   // Display the success message and handle the final records.
 }
 
-
 function init() {
   // always show the welcome modal
   showWelcomeModal();
+  startGame();
+  welcomeModal.addEventListener("click", closeWelcomeModal);
+  document.addEventListener("keydown", closeWelcomeModal);
+
+  // Load saved records.
+
+  // Register event listeners.
+
+  // Start the game.
 
   // load any previously saved player name
   const savedName = loadPlayerName();
@@ -186,39 +195,19 @@ function init() {
   if (savedName) {
     playerName = savedName;
 
-    document.getElementById("player-name").textContent =
-      savedName;
+    document.getElementById("player-name").textContent = savedName;
   }
 
-  // allow modal to be closed
-  welcomeModal.addEventListener(
-    "click",
-    closeWelcomeModal
-  );
-
   // handle welcome form submission
-  const welcomeForm =
-    document.getElementById("modal-form");
+  const welcomeForm = document.getElementById("modal-form");
 
-  welcomeForm.addEventListener(
-    "submit",
-    handleWelcomeSubmit
-  );
-
-  // Load saved records.
-
-  // Register event listeners.
-
-  // Start the game.
+  welcomeForm.addEventListener("submit", handleWelcomeSubmit);
 }
 init();
-
-
 
 function loadPlayerName() {
   return localStorage.getItem(PLAYER_KEY);
 }
-
 
 function savePlayerName(name) {
   localStorage.setItem(PLAYER_KEY, name);
@@ -244,21 +233,19 @@ function closeWelcomeModal(event) {
 // closeStatsModal();
 
 function handleWelcomeSubmit(event) {
-
   event.preventDefault();
 
   const input = document.getElementById("player-input");
   const name = input.value.trim();
-
+  
   if (!name) {
     alert("Please enter your name");
     return;
   }
 
   savePlayerName(name);
+  playerName = name;
 
   document.getElementById("player-name").textContent = name;
   welcomeModal.classList.remove("open-modal");
-
-  startGame();
 }

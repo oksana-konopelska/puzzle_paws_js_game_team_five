@@ -185,34 +185,48 @@ function finishGame() {
 }
 
 function init() {
-  // show this modal when the window loads for the first time
+  // always show the welcome modal
   showWelcomeModal();
   startGame();
   welcomeModal.addEventListener("click", closeWelcomeModal);
   document.addEventListener("keydown", closeWelcomeModal);
 
   // Load saved records.
-  // Register event listeners.
-  // Start the game.
-}
 
+  // Register event listeners.
+
+  // Start the game.
+
+  // load any previously saved player name
+  const savedName = loadPlayerName();
+
+  // display saved player name if one exists
+  if (savedName) {
+    playerName = savedName;
+
+    document.getElementById("player-name").textContent = savedName;
+  }
+
+  // handle welcome form submission
+  const welcomeForm = document.getElementById("modal-form");
+
+  welcomeForm.addEventListener("submit", handleWelcomeSubmit);
+}
 init();
 
-// Build loadPlayerName(), savePlayerName(name), showWelcomeModal(), closeWelcomeModal(), handleWelcomeSubmit(event)
+function loadPlayerName() {
+  return localStorage.getItem(PLAYER_KEY);
+}
 
-// loadPlayerName();
-
-// savePlayerName(name);
+function savePlayerName(name) {
+  localStorage.setItem(PLAYER_KEY, name);
+}
 
 function showWelcomeModal() {
-  // show welcome
-  // grab the modal by id
-  // change the visibility to visible
   welcomeModal.classList.add("open-modal");
 }
 
 function closeWelcomeModal(event) {
-  // change the welcome modal visibility to hidden
   console.log(event.key);
   if (
     event.target === welcomeModal ||
@@ -227,6 +241,20 @@ function closeWelcomeModal(event) {
 
 // closeStatsModal();
 
-// handleWelcomeSubmit(event) {
+function handleWelcomeSubmit(event) {
+  event.preventDefault();
 
-// };
+  const input = document.getElementById("player-input");
+  const name = input.value.trim();
+  
+  if (!name) {
+    alert("Please enter your name");
+    return;
+  }
+
+  savePlayerName(name);
+  playerName = name;
+
+  document.getElementById("player-name").textContent = name;
+  welcomeModal.classList.remove("open-modal");
+}

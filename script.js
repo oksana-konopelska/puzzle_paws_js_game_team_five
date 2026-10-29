@@ -1,3 +1,10 @@
+
+
+const IMAGE_PATH = "assets/animals";
+const FLIP_BACK_DELAY_MS = 600;
+const CORRECT_DELAY_MS = 1000;
+const STORAGE_KEY = "memoryBest";
+const PLAYER_KEY = "memoryPlayerName";
 const CARD_NAMES = [
   "bear",
   "dog",
@@ -9,13 +16,19 @@ const CARD_NAMES = [
   "squirrel",
 ];
 
-const IMAGE_PATH = "assets/animals";
-const FLIP_BACK_DELAY_MS = 600;
-const CORRECT_DELAY_MS = 1000;
-const STORAGE_KEY = "memoryBest";
-const PLAYER_KEY = "memoryPlayerName";
+const CARD_NAMES_FLOWERS = [
+  "sunflower",
+  "hortensia",
+  "tulip",
+  "lilac",
+  "camomille",
+  "piony",
+  "rose",
+  "daizy",
+];
 
 const gameState = {
+  // cards:  createDeck(CARD_NAMES),
   cards: [],
   flippedCards: [],
   matchedPairs: 0,
@@ -26,6 +39,8 @@ const gameState = {
   flipBackTimeoutId: null,
   hideTimeoutIds: [],
 };
+
+console.log(gameState.cards)
 
 const bestRecords = {
   moves: null,
@@ -53,11 +68,21 @@ function startGame() {
   // Reset game state and cancel pending timers.
   // Create, shuffle and render a new deck.
   // Keep the saved best records.
+  gameState.cards = shuffle(CARD_NAMES);
+
 }
 
+
 function createDeck(names) {
-  // Create two cards for each name.
-  // Give every card a unique ID and initial state.
+  const cards = [];
+  let id = 1;
+  for(let i = 0; i < names.length; i++){
+   
+    for (let j = 0; j < 2; j++){
+      cards.push({id: id++, name: names[i], isMatched: false, isFlipped: false, isHidden: false });
+    }
+  }
+  return cards;
 }
 
 function shuffle(array) {
@@ -200,6 +225,7 @@ function init() {
   // Register event listeners.
 
   // Start the game.
+  
 }
 init();
 

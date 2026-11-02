@@ -41,6 +41,7 @@ const timeEl = document.getElementById("time");
 const bestMovesEl = document.getElementById("best-moves");
 const bestTimeEl = document.getElementById("best-time");
 
+
 function startGame() {
   // (this is also the Restart action, so it resets everything except the records)
   // 1. stop every waiting timer of the old game:

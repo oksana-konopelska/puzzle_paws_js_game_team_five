@@ -1,10 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Paws Memory Game</title>
-    <link rel="icon" type="image/x-icon" href="/assets/icons/paw-icon.svg">
+    <link rel="icon" type="image/x-icon" href="/assets/icons/paw-icon.svg" />
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
   </head>
@@ -20,19 +20,19 @@
         <div class="game-stats">
           <div class="stat-box">
             <div>Moves</div>
-            <p id="moves">20</p>
+            <p id="moves">0</p>
           </div>
 
           <div class="timer stat-box">
             <div>Time</div>
-            <p id="time">0:00</p>
+            <p id="time" onclick="stopTimer()">00:00</p>
           </div>
         </div>
       </div>
     </header>
     <main class="game-container">
       <section class="game-board" aria-label="Memory card game" id="board">
-        <button class="card flipped" aria-label="Card 1">
+        <button class="card flipped" aria-label="Card 1" onclick="startTimer()">
           <div class="card-inner">
             <div class="card-front">
               <img src="assets/animals/bear.svg" />

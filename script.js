@@ -56,7 +56,6 @@ const bestTimeEl = document.getElementById("best-time");
 
 // modal variable
 const welcomeModal = document.getElementById("welcome-modal");
-
 const closeWelcomeButton = document.getElementById("close-welcome-btn");
 
 // ## Game setup
@@ -68,7 +67,7 @@ function startGame() {
   // Keep the saved best records.
   gameState.cards = createDeck(CARD_NAMES);
   shuffle(gameState.cards);
-  console.log(gameState.cards)
+  console.log(gameState.cards);
 }
 
 function createDeck(names) {
@@ -91,14 +90,11 @@ function createDeck(names) {
 function shuffle(array) {
   // Randomize the array in place.
 
-  for (let i = array.length -1; i > 0; i--){
+  for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array [j], array[i]];
+    [array[i], array[j]] = [array[j], array[i]];
   }
-
 }
-
-
 
 // ## Cards and rendering
 
@@ -143,23 +139,49 @@ function updateMoves() {
   // Update the moves display.
 }
 
-// ## Timer
+// Timer
+
+function padStart(value) {
+  //Formats numbers to always have at least two digits
+  return String(value).padStart(2, "0");
+}
 
 function startTimer() {
   // Start tracking elapsed time from the first move.
   // Update the displayed time periodically.
+
+  gameState.startTime = Date.now();
+  gameState.timerId = setInterval(function () {
+    gameState.time = Math.floor((Date.now() - gameState.startTime) / 1000);
+
+    updateTime();
+  }, 1000);
+
+  //I set onclick to the first card, so if you click on it, the timer will begin
+  //just for testing purposes
 }
 
 function stopTimer() {
   // Stop the timer.
+
+  clearInterval(gameState.timerId);
+  gameState.timerId = null;
+  //I set onclick to the timer, so if you click on the timer, it will stop.
+  //just for testing purposes
 }
 
 function formatTime(totalSeconds) {
   // Return the time in mm:ss format.
+
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${padStart(minutes)}:${padStart(seconds)}`;
 }
 
 function updateTime() {
   // Update the time display.
+  timeEl.textContent = formatTime(gameState.time);
 }
 
 // ## Best records
@@ -246,7 +268,7 @@ function handleWelcomeSubmit(event) {
 
   const input = document.getElementById("player-input");
   const name = input.value.trim();
-  
+
   if (!name) {
     alert("Please enter your name");
     return;

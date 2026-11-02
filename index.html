@@ -15,7 +15,7 @@
           <img src="assets/logo.svg" alt="Paw logo" />
         </div>
 
-        <div class="player-info">Hello, <span id="player-name">Anna</span></div>
+        <div class="player-info">Hello, <span id="player-name"></span></div>
 
         <div class="game-stats">
           <div class="stat-box">
@@ -172,7 +172,7 @@
     <!-- welcome modal -->
     <div id="welcome-modal" class="modal-overlay">
       <div id="modal-div">
-        <a class="close-btn"  href="#"
+        <a class="close-btn" href="#"
           ><img id="close-welcome-btn" src="assets/icons/close_circle.svg"
         /></a>
         <div id="modal-header">
@@ -190,10 +190,9 @@
                 ><img src="assets/icons/question-mark-circle.svg"
               /></a>
             </div>
-            <input />
+            <input id="player-input" type="text" />
+            <button type="submit" class="btn">Submit</button>
           </form>
-
-          <button class="btn">Submit!</button>
         </div>
       </div>
     </div>

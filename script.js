@@ -1,5 +1,3 @@
-
-
 const IMAGE_PATH = "assets/animals";
 const FLIP_BACK_DELAY_MS = 600;
 const CORRECT_DELAY_MS = 1000;
@@ -40,7 +38,7 @@ const gameState = {
   hideTimeoutIds: [],
 };
 
-console.log(gameState.cards)
+console.log(gameState.cards);
 
 const bestRecords = {
   moves: null,
@@ -68,18 +66,23 @@ function startGame() {
   // Reset game state and cancel pending timers.
   // Create, shuffle and render a new deck.
   // Keep the saved best records.
-  gameState.cards = shuffle(CARD_NAMES);
-
+  gameState.cards = createDeck(CARD_NAMES);
+  shuffle(gameState.cards);
+  console.log(gameState.cards)
 }
-
 
 function createDeck(names) {
   const cards = [];
   let id = 1;
-  for(let i = 0; i < names.length; i++){
-   
-    for (let j = 0; j < 2; j++){
-      cards.push({id: id++, name: names[i], isMatched: false, isFlipped: false, isHidden: false });
+  for (let i = 0; i < names.length; i++) {
+    for (let j = 0; j < 2; j++) {
+      cards.push({
+        id: id++,
+        name: names[i],
+        isMatched: false,
+        isFlipped: false,
+        isHidden: false,
+      });
     }
   }
   return cards;
@@ -87,7 +90,15 @@ function createDeck(names) {
 
 function shuffle(array) {
   // Randomize the array in place.
+
+  for (let i = array.length -1; i > 0; i--){
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array [j], array[i]];
+  }
+
 }
+
+
 
 // ## Cards and rendering
 
@@ -174,48 +185,76 @@ function finishGame() {
 }
 
 function init() {
-  // show this modal when the window loads for the first time
+  // always show the welcome modal
   showWelcomeModal();
-  startGame(); 
-  welcomeModal.addEventListener('click', closeWelcomeModal);
-  document.addEventListener('keydown', closeWelcomeModal);
+  startGame();
+  welcomeModal.addEventListener("click", closeWelcomeModal);
+  document.addEventListener("keydown", closeWelcomeModal);
 
   // Load saved records.
-  // Register event listeners.
-  // Start the game.
-  
-}
 
+  // Register event listeners.
+
+  // Start the game.
+
+  // load any previously saved player name
+  const savedName = loadPlayerName();
+
+  // display saved player name if one exists
+  if (savedName) {
+    playerName = savedName;
+
+    document.getElementById("player-name").textContent = savedName;
+  }
+
+  // handle welcome form submission
+  const welcomeForm = document.getElementById("modal-form");
+
+  welcomeForm.addEventListener("submit", handleWelcomeSubmit);
+}
 init();
 
-// Build loadPlayerName(), savePlayerName(name), showWelcomeModal(), closeWelcomeModal(), handleWelcomeSubmit(event)
+function loadPlayerName() {
+  return localStorage.getItem(PLAYER_KEY);
+}
 
-// loadPlayerName();
-
-// savePlayerName(name);
+function savePlayerName(name) {
+  localStorage.setItem(PLAYER_KEY, name);
+}
 
 function showWelcomeModal() {
-  // show welcome
-  // grab the modal by id
-  // change the visibility to visible
   welcomeModal.classList.add("open-modal");
 }
 
 function closeWelcomeModal(event) {
-  // change the welcome modal visibility to hidden
   console.log(event.key);
-  if (event.target === welcomeModal || event.target === closeWelcomeButton || event.key === 'Escape') {
+  if (
+    event.target === welcomeModal ||
+    event.target === closeWelcomeButton ||
+    event.key === "Escape"
+  ) {
     welcomeModal.classList.remove("open-modal");
   }
-
 }
-
-
 
 // showStatsModal();
 
 // closeStatsModal();
 
-// handleWelcomeSubmit(event) {
+function handleWelcomeSubmit(event) {
+  event.preventDefault();
 
-// };
+  const input = document.getElementById("player-input");
+  const name = input.value.trim();
+  
+  if (!name) {
+    alert("Please enter your name");
+    return;
+  }
+
+  savePlayerName(name);
+  playerName = name;
+
+  document.getElementById("player-name").textContent = name;
+  welcomeModal.classList.remove("open-modal");
+}

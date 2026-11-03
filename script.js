@@ -1,7 +1,7 @@
 const IMAGE_PATH = "assets/animals";
 const FLIP_BACK_DELAY_MS = 600;
 const CORRECT_DELAY_MS = 1000;
-const STORAGE_KEY = "memoryBest";
+const BEST_RECORDS_KEY = "memoryBest";
 const PLAYER_KEY = "memoryPlayerName";
 const CARD_NAMES = [
   "bear",
@@ -187,21 +187,43 @@ function updateTime() {
 // ## Best records
 
 function loadBest() {
-  // Load saved records from localStorage.
-  // Handle missing or invalid saved data.
+  const savedRecords = localStorage.getItem(BEST_RECORDS_KEY);
+  if (savedRecords) {
+    const parsedRecords = JSON.parse(savedRecords);
+    bestRecords.moves = parsedRecords.moves;
+    bestRecords.time = parsedRecords.time;
+  }
+  updateBest();
 }
 
 function handleNewRecord() {
-  // Update and save records when a better result is achieved.
+  let recordUpdated = false;
+
+  if (bestRecords.moves === null || gameState.moves < bestRecords.moves) {
+    bestRecords.moves = gameState.moves;
+    recordUpdated = true;
+  }
+  if (bestRecords.time === null || gameState.time < bestRecords.time) {
+    bestRecords.time = gameState.time;
+    recordUpdated = true;
+  }
+  if (recordUpdated) {
+    localStorage.setItem(BEST_RECORDS_KEY, JSON.stringify(bestRecords));
+  }
+  updateBest();
 }
 
 function updateBest() {
-  // Display the best moves and time, or "-" if no record exists.
+  bestMovesEl.textContent =
+    bestRecords.moves !== null ? bestRecords.moves : "-";
+  bestTimeEl.textContent =
+    bestRecords.time !== null ? formatTime(bestRecords.time) : "-";
 }
 
 // ## Game completion and initialization
 
 function finishGame() {
+  handleNewRecord();
   // Stop the timer and finalize elapsed time.
   // Display the success message and handle the final records.
 }
@@ -210,10 +232,9 @@ function init() {
   // always show the welcome modal
   showWelcomeModal();
   startGame();
+  loadBest();
   welcomeModal.addEventListener("click", closeWelcomeModal);
   document.addEventListener("keydown", closeWelcomeModal);
-
-  // Load saved records.
 
   // Register event listeners.
 
@@ -234,6 +255,7 @@ function init() {
 
   welcomeForm.addEventListener("submit", handleWelcomeSubmit);
 }
+
 init();
 
 function loadPlayerName() {

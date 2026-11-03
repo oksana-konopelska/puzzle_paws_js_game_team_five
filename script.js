@@ -214,7 +214,10 @@ function handleNewRecord() {
 }
 
 function updateBest() {
-  // Display the best moves and time, or "-" if no record exists.
+  bestMovesEl.textContent =
+    bestRecords.moves !== null ? bestRecords.moves : "-";
+  bestTimeEl.textContent =
+    bestRecords.time !== null ? formatTime(bestRecords.time) : "-";
 }
 
 // ## Game completion and initialization
@@ -232,8 +235,6 @@ function init() {
   loadBest();
   welcomeModal.addEventListener("click", closeWelcomeModal);
   document.addEventListener("keydown", closeWelcomeModal);
-
-  // Load saved records.
 
   // Register event listeners.
 
@@ -254,6 +255,7 @@ function init() {
 
   welcomeForm.addEventListener("submit", handleWelcomeSubmit);
 }
+
 init();
 
 function loadPlayerName() {

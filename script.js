@@ -1,7 +1,7 @@
 const IMAGE_PATH = "assets/animals";
 const FLIP_BACK_DELAY_MS = 600;
 const CORRECT_DELAY_MS = 1000;
-const STORAGE_KEY = "memoryBest";
+const BEST_RECORDS_KEY = "memoryBest";
 const PLAYER_KEY = "memoryPlayerName";
 const CARD_NAMES = [
   "bear",
@@ -187,8 +187,13 @@ function updateTime() {
 // ## Best records
 
 function loadBest() {
-  // Load saved records from localStorage.
-  // Handle missing or invalid saved data.
+  const savedRecords = localStorage.getItem(BEST_RECORDS_KEY);
+  if (savedRecords) {
+    const parsedRecords = JSON.parse(savedRecords);
+    bestRecords.moves = parsedRecords.moves;
+    bestRecords.time = parsedRecords.time;
+  }
+  updateBest();
 }
 
 function handleNewRecord() {
@@ -210,6 +215,7 @@ function init() {
   // always show the welcome modal
   showWelcomeModal();
   startGame();
+  loadBest();
   welcomeModal.addEventListener("click", closeWelcomeModal);
   document.addEventListener("keydown", closeWelcomeModal);
 

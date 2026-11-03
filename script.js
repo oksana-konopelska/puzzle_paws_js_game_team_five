@@ -197,7 +197,20 @@ function loadBest() {
 }
 
 function handleNewRecord() {
-  // Update and save records when a better result is achieved.
+  let recordUpdated = false;
+
+  if (bestRecords.moves === null || gameState.moves < bestRecords.moves) {
+    bestRecords.moves = gameState.moves;
+    recordUpdated = true;
+  }
+  if (bestRecords.time === null || gameState.time < bestRecords.time) {
+    bestRecords.time = gameState.time;
+    recordUpdated = true;
+  }
+  if (recordUpdated) {
+    localStorage.setItem(BEST_RECORDS_KEY, JSON.stringify(bestRecords));
+  }
+  updateBest();
 }
 
 function updateBest() {
@@ -207,6 +220,7 @@ function updateBest() {
 // ## Game completion and initialization
 
 function finishGame() {
+  handleNewRecord();
   // Stop the timer and finalize elapsed time.
   // Display the success message and handle the final records.
 }

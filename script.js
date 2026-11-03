@@ -67,6 +67,7 @@ function startGame() {
   // Keep the saved best records.
   gameState.cards = createDeck(CARD_NAMES);
   shuffle(gameState.cards);
+  renderCards(gameState.cards);
   console.log(gameState.cards);
 }
 
@@ -79,7 +80,7 @@ function createDeck(names) {
         id: id++,
         name: names[i],
         isMatched: false,
-        isFlipped: false,
+        isFlipped: true,
         isHidden: false,
       });
     }
@@ -96,20 +97,65 @@ function shuffle(array) {
   }
 }
 
-// ## Cards and rendering
-
 function renderCards(cards) {
-  // Render the cards on the board.
+  board.innerHTML = "";
+  cards.forEach((card) => {
+    board.appendChild(createCard(card));
+  });
 }
+// <button class="card" data-id="1"
+// >
+//   <div class="card-inner">
+//     <div class="card-front">
+//       <img src="assets/animals/bear.svg" />
+//     </div>
+//     <div class="card-back"></div>
+//   </div>
+// </button>
 
 function createCard(card) {
-  // Create a card element with its image and back.
-  // Set its ID and initial appearance.
-  // Return the element.
+  const cardButton = document.createElement("button");
+  cardButton.classList.add("card");
+  cardButton.setAttribute("data-id", card.id);
+
+  const cardInner = document.createElement("div");
+  cardInner.classList.add("card-inner");
+  cardButton.appendChild(cardInner);
+
+  const cardFront = document.createElement("div");
+  cardFront.classList.add("card-front");
+  cardInner.appendChild(cardFront);
+
+  const cardImage = document.createElement("img");
+  cardImage.src = `${IMAGE_PATH}/${card.name}.svg`;
+  cardImage.alt = card.name;
+  cardFront.appendChild(cardImage);
+
+  const cardBack = document.createElement("div");
+  cardBack.classList.add("card-back");
+  cardInner.appendChild(cardBack);
+
+  updateCardElement(cardButton, card);
+
+  return cardButton;
 }
 
+//     card =    {
+//   "id": 6,
+//   "name": "fox",
+//   "isMatched": false,
+//   "isFlipped": true,
+//   "isHidden": false
+// }
+
 function updateCardElement(cardEl, card) {
-  // Update the card's CSS classes based on its state.
+  if (card.isFlipped) {
+    cardEl.classList.toggle("flipped");
+  }
+  if (card.isMatched) {
+    cardEl.classList.toggle("hidden");
+  }
+
 }
 
 function refreshCard(card) {

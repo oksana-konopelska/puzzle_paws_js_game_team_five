@@ -60,7 +60,8 @@ const closeWelcomeButton = document.getElementById("close-welcome-btn");
 
 // ## Game setup
 
-function startGame() {
+// hello from anna jejeje
+function startGame() { 
   // Start a new game or restart the current one.
   // Reset game state and cancel pending timers.
   // Create, shuffle and render a new deck.

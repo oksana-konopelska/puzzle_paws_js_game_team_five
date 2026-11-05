@@ -167,16 +167,32 @@ function handleCardClick(cardEl) {
     return card.id === parseInt(cardEl.dataset.id);
   });
 
-  if (card.isFlipped) {
-    click++;
-    updateCardElement(cardEl, card);
-    card.isFlipped = false;
+  if (!card.isFlipped) {
+    return;
+  }
+  if (gameState.flippedCards.length === 2) {
+    flipBackWrongCards();
+  }
+  if (gameState.startTime === null) {
+    startTimer();
   }
 
-  updateMoves();
+  card.isFlipped = false;
+    updateCardElement(cardEl, card);
 
-  // Handle a player's click on a card.
-  // Follow the game rules and check pairs when appropriate.
+  gameState.flippedCards.push(card);
+
+  if (gameState.flippedCards.length === 2) {
+    checkPairs();
+  }
+
+  // if (card.isFlipped) {
+  //   click++;
+  //   updateCardElement(cardEl, card);
+  //   card.isFlipped = false;
+  // }
+
+  // updateMoves();
 }
 
 function flipBackWrongCards() {

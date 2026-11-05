@@ -58,7 +58,7 @@ const bestTimeEl = document.getElementById("best-time");
 const welcomeModal = document.getElementById("welcome-modal");
 const closeWelcomeButton = document.getElementById("close-welcome-btn");
 
-let click = 0;
+// let click = 0;
 
 // ## Game setup
 
@@ -163,20 +163,36 @@ function refreshCard(card) {
 // ## Game logic
 
 function handleCardClick(cardEl) {
-  let card = gameState.cards.find(function (card) {
+  const card = gameState.cards.find(function (card) {
     return card.id === parseInt(cardEl.dataset.id);
   });
 
-  if (card.isFlipped) {
-    click++;
-    updateCardElement(cardEl, card);
-    card.isFlipped = false;
+  if (!card.isFlipped) {
+    return;
+  }
+  if (gameState.flippedCards.length === 2) {
+    flipBackWrongCards();
+  }
+  if (gameState.startTime === null) {
+    startTimer();
   }
 
-  updateMoves();
+  card.isFlipped = false;
+  updateCardElement(cardEl, card);
 
-  // Handle a player's click on a card.
-  // Follow the game rules and check pairs when appropriate.
+  gameState.flippedCards.push(card);
+
+  if (gameState.flippedCards.length === 2) {
+    checkPairs();
+  }
+
+  // if (card.isFlipped) {
+  //   click++;
+  //   updateCardElement(cardEl, card);
+  //   card.isFlipped = false;
+  // }
+
+  // updateMoves();
 }
 
 function flipBackWrongCards() {
@@ -192,9 +208,9 @@ function checkPairs() {
 }
 
 function updateMoves() {
-  let moves = 0;
-  moves = Math.floor(click / 2);
-  movesEl.innerHTML = moves;
+  // let moves = 0;
+  // moves = Math.floor(click / 2);
+  movesEl.innerHTML = gameState.moves;
 }
 
 // Timer

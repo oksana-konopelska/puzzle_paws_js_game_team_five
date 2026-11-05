@@ -58,6 +58,8 @@ const bestTimeEl = document.getElementById("best-time");
 const welcomeModal = document.getElementById("welcome-modal");
 const closeWelcomeButton = document.getElementById("close-welcome-btn");
 
+let click = 0;
+
 // ## Game setup
 
 function startGame() {
@@ -155,7 +157,6 @@ function updateCardElement(cardEl, card) {
   if (card.isMatched) {
     cardEl.classList.toggle("hidden");
   }
-
 }
 
 function refreshCard(card) {
@@ -165,6 +166,18 @@ function refreshCard(card) {
 // ## Game logic
 
 function handleCardClick(cardEl) {
+  let card = gameState.cards.find(function (card) {
+    return card.id === parseInt(cardEl.dataset.id);
+  });
+
+  if (card.isFlipped) {
+    click++;
+    updateCardElement(cardEl, card);
+    card.isFlipped = false;
+  }
+
+  updateMoves();
+
   // Handle a player's click on a card.
   // Follow the game rules and check pairs when appropriate.
 }
@@ -182,7 +195,9 @@ function checkPairs() {
 }
 
 function updateMoves() {
-  // Update the moves display.
+  let moves = 0;
+  moves = Math.floor(click / 2);
+  movesEl.innerHTML = moves;
 }
 
 // Timer
@@ -269,31 +284,29 @@ function updateBest() {
 // ## Game completion and initialization
 
 function finishGame() {
+  function openSuccessModal() {
+    const successModal = document.getElementById("success-modal");
 
-
-function openSuccessModal() {
-  const successModal = document.getElementById("success-modal");
-
-  if (successModal) {
-    successModal.classList.add("open-modal");
+    if (successModal) {
+      successModal.classList.add("open-modal");
+    }
   }
-}
 
-function closeSuccessModal() {
-  const successModal = document.getElementById("success-modal");
+  function closeSuccessModal() {
+    const successModal = document.getElementById("success-modal");
 
-  if (successModal) {
-    successModal.classList.remove("open-modal");
+    if (successModal) {
+      successModal.classList.remove("open-modal");
+    }
   }
-}
-document.addEventListener("click", function(event) {
-  if (
-    event.target.id === "success-modal" ||
-    event.target.closest("#close-success-modal")
-  ) {
-    closeSuccessModal();
-  }
-});
+  document.addEventListener("click", function (event) {
+    if (
+      event.target.id === "success-modal" ||
+      event.target.closest("#close-success-modal")
+    ) {
+      closeSuccessModal();
+    }
+  });
 
   handleNewRecord();
   // Stop the timer and finalize elapsed time.
@@ -307,6 +320,11 @@ function init() {
   loadBest();
   welcomeModal.addEventListener("click", closeWelcomeModal);
   document.addEventListener("keydown", closeWelcomeModal);
+
+  board.addEventListener("click", function (event) {
+    const button = event.target.closest("button");
+    handleCardClick(button);
+  });
 
   // Register event listeners.
 

@@ -151,12 +151,9 @@ function createCard(card) {
 // }
 
 function updateCardElement(cardEl, card) {
-  if (card.isFlipped) {
-    cardEl.classList.toggle("flipped");
-  }
-  if (card.isMatched) {
-    cardEl.classList.toggle("hidden");
-  }
+  cardEl.classList.toggle("flipped", card.isFlipped);
+  cardEl.classList.toggle("correct", card.isMatched && !card.isHidden);
+  cardEl.classList.toggle("hidden", card.isHidden);
 }
 
 function refreshCard(card) {

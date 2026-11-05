@@ -58,7 +58,7 @@ const bestTimeEl = document.getElementById("best-time");
 const welcomeModal = document.getElementById("welcome-modal");
 const closeWelcomeButton = document.getElementById("close-welcome-btn");
 
-let click = 0;
+// let click = 0;
 
 // ## Game setup
 
@@ -178,7 +178,7 @@ function handleCardClick(cardEl) {
   }
 
   card.isFlipped = false;
-    updateCardElement(cardEl, card);
+  updateCardElement(cardEl, card);
 
   gameState.flippedCards.push(card);
 
@@ -208,9 +208,9 @@ function checkPairs() {
 }
 
 function updateMoves() {
-  let moves = 0;
-  moves = Math.floor(click / 2);
-  movesEl.innerHTML = moves;
+  // let moves = 0;
+  // moves = Math.floor(click / 2);
+  movesEl.innerHTML = gameState.moves;
 }
 
 // Timer

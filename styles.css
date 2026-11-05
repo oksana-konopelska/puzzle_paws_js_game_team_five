@@ -165,6 +165,9 @@ body {
 
 .card.correct .card-front {
   background-color: var(--bg-card-matched);
+  transition-property: background-color;
+  transition-duration: 0.7s;
+  transition-delay: 0.3s;
 }
 
 .card-inner {
@@ -185,8 +188,8 @@ body {
   border-radius: 12px;
 }
 
-.card:hover .card-back,
-.card:hover .card-front {
+.card:not(.correct):hover .card-back,
+.card:not(.correct):hover .card-front {
   background-color: var(--bg-card-hover);
 }
 .card-back {
@@ -385,7 +388,6 @@ body {
   margin-top: 60px;
   margin-bottom: 40px;
 }
-
 
 .open-modal {
   display: flex;

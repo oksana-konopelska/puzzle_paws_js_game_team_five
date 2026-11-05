@@ -1,6 +1,6 @@
 const IMAGE_PATH = "assets/animals";
 const FLIP_BACK_DELAY_MS = 600;
-const CORRECT_DELAY_MS = 1000;
+const CORRECT_DELAY_MS = 1400;
 const BEST_RECORDS_KEY = "memoryBest";
 const PLAYER_KEY = "memoryPlayerName";
 const CARD_NAMES = [
@@ -151,12 +151,9 @@ function createCard(card) {
 // }
 
 function updateCardElement(cardEl, card) {
-  if (card.isFlipped) {
-    cardEl.classList.toggle("flipped");
-  }
-  if (card.isMatched) {
-    cardEl.classList.toggle("hidden");
-  }
+  cardEl.classList.toggle("flipped", card.isFlipped);
+  cardEl.classList.toggle("correct", card.isMatched && !card.isHidden);
+  cardEl.classList.toggle("hidden", card.isHidden);
 }
 
 function refreshCard(card) {

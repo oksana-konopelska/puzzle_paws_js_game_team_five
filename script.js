@@ -1,6 +1,6 @@
 const IMAGE_PATH = "assets/animals";
 const FLIP_BACK_DELAY_MS = 600;
-const CORRECT_DELAY_MS = 1000;
+const CORRECT_DELAY_MS = 1400;
 const BEST_RECORDS_KEY = "memoryBest";
 const PLAYER_KEY = "memoryPlayerName";
 const CARD_NAMES = [

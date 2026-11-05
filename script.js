@@ -163,7 +163,7 @@ function refreshCard(card) {
 // ## Game logic
 
 function handleCardClick(cardEl) {
-  let card = gameState.cards.find(function (card) {
+  const card = gameState.cards.find(function (card) {
     return card.id === parseInt(cardEl.dataset.id);
   });
 

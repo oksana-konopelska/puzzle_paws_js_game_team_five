@@ -15,7 +15,7 @@
           <img src="assets/logo.svg" alt="Paw logo" />
         </div>
 
-        <div class="player-info">Hello, <span id="player-name"></span></div>
+        <div class="player-info">Hello <span id="player-name" class="clickable-name"></span></div>
 
         <div class="game-stats">
           <div class="stat-box">
@@ -31,9 +31,11 @@
       </div>
     </header>
     <main class="game-container">
-      <section class="game-board" aria-label="Memory card game" id="board">
-
-      </section>
+      <section
+        class="game-board"
+        aria-label="Memory card game"
+        id="board"
+      ></section>
 
       <div class="game-controls">
         <button id="restart-button" type="button" class="btn">Restart</button>
@@ -57,8 +59,14 @@
             <div id="label-icon">
               <label id="label-name">Enter your name:</label>
               <a href="#"
-                ><img src="assets/icons/question-mark-circle.svg"
-              /></a>
+                ><div class="tooltip">
+                  <img src="assets/icons/question-mark-circle.svg" alt="Help" />
+                  <span class="tooltip-text">
+                    Enter your name to save your progress and track your best
+                    scores.
+                  </span>
+                </div>
+              </a>
             </div>
             <input id="player-input" type="text" />
             <button type="submit" class="btn">Submit</button>

@@ -15,7 +15,9 @@
           <img src="assets/logo.svg" alt="Paw logo" />
         </div>
 
-        <div class="player-info">Hello <span id="player-name" class="clickable-name"></span></div>
+        <div class="player-info">
+          Hello <span id="player-name" class="clickable-name"></span>
+        </div>
 
         <div class="game-stats">
           <div class="stat-box">
@@ -74,13 +76,13 @@
         </div>
       </div>
     </div>
-    <div class="modal-overlay">
+    <div id="success-modal" class="modal-overlay">
       <div id="modal-div">
         <a class="close-btn" href="#"
-          ><img src="assets/icons/close_circle.svg"
+          ><img id="close-success-modal" src="assets/icons/close_circle.svg"
         /></a>
         <div id="modal-header">
-          <img id="modal-header-logo" src="assets/paw-signin.svg" />
+          <img id="modal-header-logo" src="assets/modal-logo.svg" />
           <p id="modal-header-p">Congratulations! You matched all the cards</p>
           <p id="modal-sub-p">Good work, Ana</p>
         </div>
@@ -110,7 +112,7 @@
         </div>
 
         <div>
-          <button class="btn">Play again</button>
+          <button id="play-again-btn" class="btn">Play again</button>
         </div>
       </div>
     </div>

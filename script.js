@@ -237,6 +237,12 @@ function checkPairs() {
     gameState.matchedPairs++;
     gameState.flippedCards = [];
 
+    if (gameState.matchedPairs === CARD_NAMES.length) {
+      setTimeout(function () {
+        finishGame();
+      }, CORRECT_DELAY_MS);
+    }
+
     let timeOut = setTimeout(function () {
       firstCard.isHidden = true;
       secondCard.isHidden = true;
@@ -351,79 +357,17 @@ function updateBest() {
     bestRecords.time !== null ? formatTime(bestRecords.time) : "-";
 }
 
-// ## Game completion and initialization
-
 function finishGame() {
-  function openSuccessModal() {
-    const successModal = document.getElementById("success-modal");
-
-    if (successModal) {
-      successModal.classList.add("open-modal");
-    }
-  }
-
-  function closeSuccessModal() {
-    const successModal = document.getElementById("success-modal");
-
-    if (successModal) {
-      successModal.classList.remove("open-modal");
-    }
-  }
-  document.addEventListener("click", function (event) {
-    if (
-      event.target.id === "success-modal" ||
-      event.target.closest("#close-success-modal")
-    ) {
-      closeSuccessModal();
-    }
-  });
+  stopTimer();
 
   handleNewRecord();
-  // Stop the timer and finalize elapsed time.
-  // Display the success message and handle the final records.
+
+  const successModal = document.getElementById("success-modal");
+
+  if (successModal) {
+    successModal.classList.add("open-modal");
+  }
 }
-
-// function init() {
-//   // show the welcome modal initially and when a user name is clicked
-//   playerNewName.addEventListener("click", handlePlayerNameClick);
-//   function handlePlayerNameClick() {
-//   resetGameStats();
-
-//   const input = document.getElementById("player-input");
-//   input.value = playerName;
-
-//   showWelcomeModal();
-// }
-//   // showWelcomeModal();
-//   startGame();
-//   loadBest();
-//   welcomeModal.addEventListener("click", closeWelcomeModal);
-//   document.addEventListener("keydown", closeWelcomeModal);
-
-//   board.addEventListener("click", function (event) {
-//     const button = event.target.closest("button");
-//     handleCardClick(button);
-//   });
-
-//   // Register event listeners.
-
-//   // Start the game.
-
-//   // load any previously saved player name
-//   const savedName = loadPlayerName();
-
-//   // display saved player name if one exists
-//   if (savedName) {
-//     playerName = savedName;
-
-//     playerNewName.textContent = savedName;
-//   }
-
-//   // handle welcome form submission
-//   const welcomeForm = document.getElementById("modal-form");
-
-//   welcomeForm.addEventListener("submit", handleWelcomeSubmit);
-// }
 
 function init() {
   playerNewName.addEventListener("click", handlePlayerNameClick);
@@ -450,6 +394,22 @@ function init() {
 
   const welcomeForm = document.getElementById("modal-form");
   welcomeForm.addEventListener("submit", handleWelcomeSubmit);
+
+  const successModal = document.getElementById("success-modal");
+
+  const closeSuccessButton = document.getElementById("close-success-modal");
+
+  const playAgainButton = document.getElementById("play-again-btn");
+
+  successModal.addEventListener("click", function (event) {
+    if (event.target === successModal || event.target === closeSuccessButton) {
+      successModal.classList.remove("open-modal");
+    }
+  });
+  playAgainButton.addEventListener("click", function () {
+    successModal.classList.remove("open-modal");
+    startGame();
+  });
 }
 
 init();
@@ -487,16 +447,6 @@ function handleWelcomeSubmit(event) {
   const input = document.getElementById("player-input");
   const name = input.value.trim();
 
-  // if (!name) {
-  //   alert("Please enter your name");
-  //   return;
-  // }
-
-  // savePlayerName(name);
-  // playerName = name;
-
-  // playerNewName.textContent = name;
-  // welcomeModal.classList.remove("open-modal");
   if (name !== playerName) {
     // resetGameStats();
     startGame();
@@ -508,21 +458,6 @@ function handleWelcomeSubmit(event) {
 
   welcomeModal.classList.remove("open-modal");
 }
-
-// function resetGameStats() {
-//   stopTimer();
-
-//   gameState.flippedCards = [];
-//   gameState.matchedPairs = 0;
-//   gameState.moves = 0;
-//   gameState.time = 0;
-//   gameState.startTime = null;
-
-//   updateMoves();
-//   updateTime();
-
-//   startGame();
-// }
 
 function handlePlayerNameClick() {
   const input = document.getElementById("player-input");

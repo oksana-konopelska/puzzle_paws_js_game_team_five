@@ -305,27 +305,29 @@ function finishGame() {
     }
   }
 
-  function closeSuccessModal() {
-    const successModal = document.getElementById("success-modal");
-
-    if (successModal) {
-      successModal.classList.remove("open-modal");
-    }
-  }
-  document.addEventListener("click", function (event) {
-    if (
-      event.target.id === "success-modal" ||
-      event.target.closest("#close-success-modal")
-    ) {
-      closeSuccessModal();
-    }
-  });
+  
 
   handleNewRecord();
   // Stop the timer and finalize elapsed time.
   // Display the success message and handle the final records.
 }
+function closeSuccessModal() {
+  const successModal = document.getElementById("success-modal");
 
+  if (successModal) {
+    successModal.classList.remove("open-modal");
+  }
+}
+
+document.addEventListener("click", function (event) {
+  if (
+    event.target.id === "success-modal" ||
+    event.target.closest("#close-success-modal")
+  ) {
+    event.preventDefault();
+    closeSuccessModal();
+  }
+});
 function init() {
   // always show the welcome modal
   showWelcomeModal();

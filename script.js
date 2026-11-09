@@ -196,9 +196,10 @@ function flipBackWrongCards() {
   // Turn the unmatched cards face down.
   // Clear the relevant timeout and update the state.
   clearTimeout(gameState.flipBackTimeoutId);
-  flipBackTimeoutId = null;
+  gameState.flipBackTimeoutId = null;
   gameState.flippedCards.forEach(function (card) {
-    card.isFaceUp = false;
+    // card.isFaceUp = false;
+    card.isFlipped = true;
     refreshCard(card);
   });
   gameState.flippedCards = [];
@@ -218,6 +219,7 @@ function checkPairs() {
     refreshCard(secondCard);
 
     gameState.matchedPairs++;
+    gameState.flippedCards = [];
 
     let timeOut = setTimeout(function () {
       firstCard.isHidden = true;
@@ -229,8 +231,8 @@ function checkPairs() {
 
     gameState.hideTimeoutIds.push(timeOut);
   } else {
-    firstCard.isFlipped = true;
-    secondCard.isFlipped = true;
+    // firstCard.isFlipped = true;
+    // secondCard.isFlipped = true;
 
     gameState.flipBackTimeoutId = setTimeout(
       flipBackWrongCards,

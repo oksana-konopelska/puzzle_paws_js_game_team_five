@@ -72,6 +72,17 @@ function startGame() {
   // gameState.flippedCards = [];
   // gameState.matchedPairs = 0;
 
+  stopTimer();
+
+  gameState.flippedCards = [];
+  gameState.matchedPairs = 0;
+  gameState.moves = 0;
+  gameState.time = 0;
+  gameState.startTime = null;
+
+  updateMoves();
+  updateTime();
+
   gameState.cards = createDeck(CARD_NAMES);
   shuffle(gameState.cards);
   renderCards(gameState.cards);
@@ -487,33 +498,34 @@ function handleWelcomeSubmit(event) {
   // playerNewName.textContent = name;
   // welcomeModal.classList.remove("open-modal");
   if (name !== playerName) {
-  resetGameStats();
+    // resetGameStats();
+    startGame();
 
-  savePlayerName(name);
-  playerName = name;
-  playerNewName.textContent = name;
+    savePlayerName(name);
+    playerName = name;
+    playerNewName.textContent = name;
+  }
+
+  welcomeModal.classList.remove("open-modal");
 }
 
-welcomeModal.classList.remove("open-modal");
-}
+// function resetGameStats() {
+//   stopTimer();
 
-function resetGameStats() {
-  stopTimer();
+//   gameState.flippedCards = [];
+//   gameState.matchedPairs = 0;
+//   gameState.moves = 0;
+//   gameState.time = 0;
+//   gameState.startTime = null;
 
-  gameState.flippedCards = [];
-  gameState.matchedPairs = 0;
-  gameState.moves = 0;
-  gameState.time = 0;
-  gameState.startTime = null;
+//   updateMoves();
+//   updateTime();
 
-  updateMoves();
-  updateTime();
-
-  startGame();
-}
+//   startGame();
+// }
 
 function handlePlayerNameClick() {
-   const input = document.getElementById("player-input");
+  const input = document.getElementById("player-input");
   input.value = playerName;
 
   showWelcomeModal();

@@ -163,6 +163,11 @@ function updateCardElement(cardEl, card) {
 
 function refreshCard(card) {
   // Find the corresponding DOM element and update it.
+  const cardEl = document.querySelector(`#board [data-id="${card.id}"]`);
+
+  updateCardElement(cardEl, card);
+
+  console.log(cardEl);
 }
 
 // ## Game logic
@@ -190,22 +195,57 @@ function handleCardClick(cardEl) {
   if (gameState.flippedCards.length === 2) {
     checkPairs();
   }
-
-  // if (card.isFlipped) {
-  //   click++;
-  //   updateCardElement(cardEl, card);
-  //   card.isFlipped = false;
-  // }
-
-  // updateMoves();
 }
 
 function flipBackWrongCards() {
   // Turn the unmatched cards face down.
   // Clear the relevant timeout and update the state.
+  clearTimeout(gameState.flipBackTimeoutId);
+  gameState.flipBackTimeoutId = null;
+  gameState.flippedCards.forEach(function (card) {
+    // card.isFaceUp = false;
+    card.isFlipped = true;
+    refreshCard(card);
+  });
+  gameState.flippedCards = [];
 }
 
 function checkPairs() {
+  gameState.moves++;
+  updateMoves();
+
+  let firstCard = gameState.flippedCards[0];
+  let secondCard = gameState.flippedCards[1];
+
+  if (firstCard.name === secondCard.name) {
+    firstCard.isMatched = true;
+    secondCard.isMatched = true;
+    refreshCard(firstCard);
+    refreshCard(secondCard);
+
+    gameState.matchedPairs++;
+    gameState.flippedCards = [];
+
+    let timeOut = setTimeout(function () {
+      firstCard.isHidden = true;
+      secondCard.isHidden = true;
+
+      refreshCard(firstCard);
+      refreshCard(secondCard);
+    }, CORRECT_DELAY_MS);
+
+    gameState.hideTimeoutIds.push(timeOut);
+  } else {
+    // firstCard.isFlipped = true;
+    // secondCard.isFlipped = true;
+
+    gameState.flipBackTimeoutId = setTimeout(
+      flipBackWrongCards,
+      FLIP_BACK_DELAY_MS
+    );
+  }
+
+  console.log(firstCard.name, secondCard.name);
   // Count the move and compare the selected cards.
   // Handle matching and nonmatching pairs.
   // Hide matched pairs after a delay.

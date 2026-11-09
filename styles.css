@@ -199,6 +199,7 @@ body {
 .card:not(.correct):hover .card-front {
   background-color: var(--bg-card-hover);
 }
+
 .card-back {
   background-color: var(--bg-card);
   transform: rotateY(180deg);
@@ -234,6 +235,7 @@ body {
   width: 120px;
   height: 34px;
   cursor: pointer;
+
   &:hover {
     background-color: var(--color-button-pressed);
     box-shadow:
@@ -398,4 +400,33 @@ body {
 
 .open-modal {
   display: flex;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 13.75rem;
+  padding: 0.5rem 0.75rem;
+
+  background: var(--bg-card-matched);
+  color: var(--text-color);
+  border-radius: 0.375rem;
+
+  font-size: 0.875rem;
+  text-align: center;
+
+  z-index: 100;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
 }

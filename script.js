@@ -362,8 +362,6 @@ function finishGame() {
     }
   }
 
-  
-
   handleNewRecord();
   // Stop the timer and finalize elapsed time.
   // Display the success message and handle the final records.
@@ -444,7 +442,7 @@ function closeWelcomeModal(event) {
 function handleWelcomeSubmit(event) {
   event.preventDefault();
 
-  const input = document.getElementById("player-input");
+  const input = document.getElementById("player-input").focus();
   const name = input.value.trim();
 
   // if (!name) {

@@ -3,6 +3,8 @@ const FLIP_BACK_DELAY_MS = 600;
 const CORRECT_DELAY_MS = 1400;
 const BEST_RECORDS_KEY = "memoryBest";
 const PLAYER_KEY = "memoryPlayerName";
+const playerNewName = document.getElementById("player-name");
+
 const CARD_NAMES = [
   "bear",
   "dog",
@@ -67,6 +69,9 @@ function startGame() {
   // Reset game state and cancel pending timers.
   // Create, shuffle and render a new deck.
   // Keep the saved best records.
+  // gameState.flippedCards = [];
+  // gameState.matchedPairs = 0;
+
   gameState.cards = createDeck(CARD_NAMES);
   shuffle(gameState.cards);
   renderCards(gameState.cards);
@@ -242,6 +247,7 @@ function stopTimer() {
   gameState.timerId = null;
   //I set onclick to the timer, so if you click on the timer, it will stop.
   //just for testing purposes
+  gameState.startTime = null;
 }
 
 function formatTime(totalSeconds) {
@@ -326,11 +332,54 @@ function finishGame() {
   // Display the success message and handle the final records.
 }
 
+// function init() {
+//   // show the welcome modal initially and when a user name is clicked
+//   playerNewName.addEventListener("click", handlePlayerNameClick);
+//   function handlePlayerNameClick() {
+//   resetGameStats();
+
+//   const input = document.getElementById("player-input");
+//   input.value = playerName;
+
+//   showWelcomeModal();
+// }
+//   // showWelcomeModal();
+//   startGame();
+//   loadBest();
+//   welcomeModal.addEventListener("click", closeWelcomeModal);
+//   document.addEventListener("keydown", closeWelcomeModal);
+
+//   board.addEventListener("click", function (event) {
+//     const button = event.target.closest("button");
+//     handleCardClick(button);
+//   });
+
+//   // Register event listeners.
+
+//   // Start the game.
+
+//   // load any previously saved player name
+//   const savedName = loadPlayerName();
+
+//   // display saved player name if one exists
+//   if (savedName) {
+//     playerName = savedName;
+
+//     playerNewName.textContent = savedName;
+//   }
+
+//   // handle welcome form submission
+//   const welcomeForm = document.getElementById("modal-form");
+
+//   welcomeForm.addEventListener("submit", handleWelcomeSubmit);
+// }
+
 function init() {
-  // always show the welcome modal
-  showWelcomeModal();
+  playerNewName.addEventListener("click", handlePlayerNameClick);
+
   startGame();
   loadBest();
+
   welcomeModal.addEventListener("click", closeWelcomeModal);
   document.addEventListener("keydown", closeWelcomeModal);
 
@@ -339,23 +388,16 @@ function init() {
     handleCardClick(button);
   });
 
-  // Register event listeners.
-
-  // Start the game.
-
-  // load any previously saved player name
   const savedName = loadPlayerName();
 
-  // display saved player name if one exists
-  if (savedName) {
+  if (!savedName) {
+    showWelcomeModal();
+  } else {
     playerName = savedName;
-
-    document.getElementById("player-name").textContent = savedName;
+    playerNewName.textContent = savedName;
   }
 
-  // handle welcome form submission
   const welcomeForm = document.getElementById("modal-form");
-
   welcomeForm.addEventListener("submit", handleWelcomeSubmit);
 }
 
@@ -394,14 +436,45 @@ function handleWelcomeSubmit(event) {
   const input = document.getElementById("player-input");
   const name = input.value.trim();
 
-  if (!name) {
-    alert("Please enter your name");
-    return;
-  }
+  // if (!name) {
+  //   alert("Please enter your name");
+  //   return;
+  // }
+
+  // savePlayerName(name);
+  // playerName = name;
+
+  // playerNewName.textContent = name;
+  // welcomeModal.classList.remove("open-modal");
+  if (name !== playerName) {
+  resetGameStats();
 
   savePlayerName(name);
   playerName = name;
+  playerNewName.textContent = name;
+}
 
-  document.getElementById("player-name").textContent = name;
-  welcomeModal.classList.remove("open-modal");
+welcomeModal.classList.remove("open-modal");
+}
+
+function resetGameStats() {
+  stopTimer();
+
+  gameState.flippedCards = [];
+  gameState.matchedPairs = 0;
+  gameState.moves = 0;
+  gameState.time = 0;
+  gameState.startTime = null;
+
+  updateMoves();
+  updateTime();
+
+  startGame();
+}
+
+function handlePlayerNameClick() {
+   const input = document.getElementById("player-input");
+  input.value = playerName;
+
+  showWelcomeModal();
 }

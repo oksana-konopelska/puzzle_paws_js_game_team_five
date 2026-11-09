@@ -10,6 +10,7 @@ Paws Memory Game is a fun and interactive card-matching game where players uncov
 - [Screenshots](#screenshots)
   - [Welcome Screen](#welcome-screen)
   - [Game Board](#game-board)
+  - [Images](#images)
   - [Success Screen](#success-screen)
 - [User Testing & Feedback](#user-testing--feedback)
   - [Participants](#participants)
@@ -63,6 +64,13 @@ Enter your name to start playing.
 Match all pairs of animal cards while keeping your moves and time as low as possible.
 
 <img width="600"  alt="paws-game" src="https://github.com/user-attachments/assets/f10b16cb-7f61-479c-8d6d-ac5b2922dc47" />
+
+## Images
+The images used in this game are licensed under [CC BY 4.0](#license)
+
+
+<img width="685" height="356" alt="animal assets" src="https://github.com/user-attachments/assets/0495e80b-b255-4679-81cb-1a44033966eb" />
+
 
 ### Success Screen
 View your results and compare them with your best records.
@@ -139,6 +147,8 @@ This project was created as part of the Frontend Developer programme at Hyper Is
 The source code is published for educational and portfolio purposes. All rights reserved.
 
 No part of this project may be copied, modified, distributed, republished, or used for commercial purposes without prior written permission from the authors.
+
+Image attribution: The images used in this project are by Noko Washiyama and are credited in accordance with the terms of the [Creative Commons Attribution 4.0 International (CC BY 4.0)] (https://creativecommons.org/licenses/by/4.0/#ref-appropriate-credit) license. 
 
 All trademarks, logos, images, and other third-party assets used in this project remain the property of their respective owners.
 

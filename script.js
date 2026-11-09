@@ -362,69 +362,29 @@ function finishGame() {
     }
   }
 
-  function closeSuccessModal() {
-    const successModal = document.getElementById("success-modal");
-
-    if (successModal) {
-      successModal.classList.remove("open-modal");
-    }
-  }
-  document.addEventListener("click", function (event) {
-    if (
-      event.target.id === "success-modal" ||
-      event.target.closest("#close-success-modal")
-    ) {
-      closeSuccessModal();
-    }
-  });
+  
 
   handleNewRecord();
   // Stop the timer and finalize elapsed time.
   // Display the success message and handle the final records.
 }
+function closeSuccessModal() {
+  const successModal = document.getElementById("success-modal");
 
-// function init() {
-//   // show the welcome modal initially and when a user name is clicked
-//   playerNewName.addEventListener("click", handlePlayerNameClick);
-//   function handlePlayerNameClick() {
-//   resetGameStats();
+  if (successModal) {
+    successModal.classList.remove("open-modal");
+  }
+}
 
-//   const input = document.getElementById("player-input");
-//   input.value = playerName;
-
-//   showWelcomeModal();
-// }
-//   // showWelcomeModal();
-//   startGame();
-//   loadBest();
-//   welcomeModal.addEventListener("click", closeWelcomeModal);
-//   document.addEventListener("keydown", closeWelcomeModal);
-
-//   board.addEventListener("click", function (event) {
-//     const button = event.target.closest("button");
-//     handleCardClick(button);
-//   });
-
-//   // Register event listeners.
-
-//   // Start the game.
-
-//   // load any previously saved player name
-//   const savedName = loadPlayerName();
-
-//   // display saved player name if one exists
-//   if (savedName) {
-//     playerName = savedName;
-
-//     playerNewName.textContent = savedName;
-//   }
-
-//   // handle welcome form submission
-//   const welcomeForm = document.getElementById("modal-form");
-
-//   welcomeForm.addEventListener("submit", handleWelcomeSubmit);
-// }
-
+document.addEventListener("click", function (event) {
+  if (
+    event.target.id === "success-modal" ||
+    event.target.closest("#close-success-modal")
+  ) {
+    event.preventDefault();
+    closeSuccessModal();
+  }
+});
 function init() {
   playerNewName.addEventListener("click", handlePlayerNameClick);
 

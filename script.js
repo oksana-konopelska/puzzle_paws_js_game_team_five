@@ -59,6 +59,7 @@ const bestTimeEl = document.getElementById("best-time");
 // modal variable
 const welcomeModal = document.getElementById("welcome-modal");
 const closeWelcomeButton = document.getElementById("close-welcome-btn");
+const input = document.getElementById("player-input");
 
 // let click = 0;
 
@@ -422,6 +423,7 @@ function savePlayerName(name) {
 
 function showWelcomeModal() {
   welcomeModal.classList.add("open-modal");
+  input.focus();
 }
 
 function closeWelcomeModal(event) {
@@ -441,8 +443,6 @@ function closeWelcomeModal(event) {
 
 function handleWelcomeSubmit(event) {
   event.preventDefault();
-
-  const input = document.getElementById("player-input").focus();
   const name = input.value.trim();
 
   // if (!name) {
@@ -483,7 +483,6 @@ function handleWelcomeSubmit(event) {
 // }
 
 function handlePlayerNameClick() {
-  const input = document.getElementById("player-input");
   input.value = playerName;
 
   showWelcomeModal();

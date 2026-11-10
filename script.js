@@ -52,6 +52,7 @@ let playerName = "";
 const board = document.getElementById("board");
 const movesEl = document.getElementById("moves");
 const timeEl = document.getElementById("time");
+const restartButton = document.getElementById("restart-button");
 
 const bestMovesEl = document.getElementById("best-moves");
 const bestTimeEl = document.getElementById("best-time");
@@ -68,14 +69,13 @@ const input = document.getElementById("player-input");
 // ## Game setup
 
 function startGame() {
-  // Start a new game or restart the current one.
-  // Reset game state and cancel pending timers.
-  // Create, shuffle and render a new deck.
-  // Keep the saved best records.
-  // gameState.flippedCards = [];
-  // gameState.matchedPairs = 0;
-
   stopTimer();
+
+  clearTimeout(gameState.flipBackTimeoutId);
+  gameState.flipBackTimeoutId = null;
+
+  gameState.hideTimeoutIds.forEach((id) => clearTimeout(id));
+  gameState.hideTimeoutIds = [];
 
   gameState.flippedCards = [];
   gameState.matchedPairs = 0;
@@ -89,7 +89,6 @@ function startGame() {
   gameState.cards = createDeck(CARD_NAMES);
   shuffle(gameState.cards);
   renderCards(gameState.cards);
-  console.log(gameState.cards);
 }
 
 function createDeck(names) {
@@ -370,11 +369,11 @@ function finishGame() {
 
   handleNewRecord();
 
- document.getElementById("success-modal-header-p").textContent =
-  `Congratulations ${playerName}!`;
+  document.getElementById("success-modal-header-p").textContent =
+    `Congratulations ${playerName}!`;
 
-document.getElementById("modal-sub-p").textContent =
-  "You matched all the cards";
+  document.getElementById("modal-sub-p").textContent =
+    "You matched all the cards";
 
   successMovesEl.textContent = gameState.moves;
 
@@ -384,9 +383,7 @@ document.getElementById("modal-sub-p").textContent =
     bestRecords.moves !== null ? bestRecords.moves : "-";
 
   bestTimeEl.textContent =
-    bestRecords.time !== null
-      ? formatTime(bestRecords.time)
-      : "-";
+    bestRecords.time !== null ? formatTime(bestRecords.time) : "-";
 
   const successModal = document.getElementById("success-modal");
 
@@ -455,6 +452,10 @@ function init() {
   });
   playAgainButton.addEventListener("click", function () {
     successModal.classList.remove("open-modal");
+    startGame();
+  });
+
+  restartButton.addEventListener("click", function () {
     startGame();
   });
 }

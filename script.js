@@ -55,6 +55,8 @@ const timeEl = document.getElementById("time");
 
 const bestMovesEl = document.getElementById("best-moves");
 const bestTimeEl = document.getElementById("best-time");
+const successMovesEl = document.getElementById("success-moves");
+const successTimeEl = document.getElementById("success-time");
 
 // modal variable
 const welcomeModal = document.getElementById("welcome-modal");
@@ -221,6 +223,11 @@ function flipBackWrongCards() {
   gameState.flippedCards = [];
 }
 
+function updateMoves() {
+  movesEl.innerHTML = gameState.moves;
+  localStorage.setItem("currentMoves", gameState.moves);
+}
+
 function checkPairs() {
   gameState.moves++;
   updateMoves();
@@ -269,11 +276,11 @@ function checkPairs() {
   // Finish the game when all pairs are found.
 }
 
-function updateMoves() {
-  // let moves = 0;
-  // moves = Math.floor(click / 2);
-  movesEl.innerHTML = gameState.moves;
-}
+// function updateMoves() {
+//   // let moves = 0;
+//   // moves = Math.floor(click / 2);
+//   movesEl.innerHTML = gameState.moves;
+// }
 
 // Timer
 
@@ -362,19 +369,35 @@ function finishGame() {
 
   handleNewRecord();
 
+ document.getElementById("success-modal-header-p").textContent =
+  `Congratulations ${playerName}!`;
+
+document.getElementById("modal-sub-p").textContent =
+  "You matched all the cards";
+
+  successMovesEl.textContent = gameState.moves;
+
+  successTimeEl.textContent = formatTime(gameState.time);
+
+  bestMovesEl.textContent =
+    bestRecords.moves !== null ? bestRecords.moves : "-";
+
+  bestTimeEl.textContent =
+    bestRecords.time !== null
+      ? formatTime(bestRecords.time)
+      : "-";
+
   const successModal = document.getElementById("success-modal");
 
-    if (successModal) {
-      successModal.classList.add("open-modal");
-    }
+  if (successModal) {
+    successModal.classList.add("open-modal");
   }
-
-  
-
-  handleNewRecord();
-  // Stop the timer and finalize elapsed time.
-  // Display the success message and handle the final records.
 }
+
+// handleNewRecord();
+// Stop the timer and finalize elapsed time.
+// Display the success message and handle the final records.
+
 function closeSuccessModal() {
   const successModal = document.getElementById("success-modal");
 

@@ -27,7 +27,7 @@
 
           <div class="timer stat-box">
             <div>Time</div>
-            <p id="time" onclick="stopTimer()">00:00</p>
+            <p id="time">00:00</p>
           </div>
         </div>
       </div>
@@ -79,12 +79,13 @@
     <div id="success-modal" class="modal-overlay">
       <div id="modal-div">
         <a id="close-success-modal" class="close-btn" href="#">
-          ><img id="close-success-modal" src="assets/icons/close_circle.svg"/>
+          <img id="close-success-modal" src="assets/icons/close_circle.svg" />
         </a>
         <div id="modal-header">
           <img id="modal-header-logo" src="assets/modal-logo.svg" />
-          <p id="modal-header-p">Congratulations! You matched all the cards</p>
-          <p id="modal-sub-p">Good work, Ana</p>
+          <!-- <p id="modal-header-p">Congratulations! You matched all the cards</p> -->
+          <p id="success-modal-header-p"></p>
+          <p id="modal-sub-p"></p>
         </div>
 
         <!-- Stats Section -->
@@ -92,22 +93,22 @@
           <div class="stat-card">
             <img class="stat-icon" src="assets/icons/paw-icon.svg" alt="paw" />
             <span class="stat-title">MOVES</span>
-            <span class="stat-value">24</span>
+            <span id="success-moves" class="stat-value">0</span>
           </div>
           <div class="stat-card">
             <img class="stat-icon" src="assets/icons/paw-icon.svg" alt="paw" />
             <span class="stat-title">BEST MOVES</span>
-            <span class="stat-value" id="best-moves">24</span>
+            <span class="stat-value" id="best-moves">0</span>
           </div>
           <div class="stat-card">
             <img class="stat-icon" src="assets/icons/paw-icon.svg" alt="paw" />
             <span class="stat-title">CURRENT TIME</span>
-            <span class="stat-value">0:47</span>
+            <span id="success-time" class="stat-value">0:00</span>
           </div>
           <div class="stat-card">
             <img class="stat-icon" src="assets/icons/paw-icon.svg" alt="paw" />
             <span class="stat-title">BEST TIME</span>
-            <span class="stat-value" id="best-time">0:20</span>
+            <span class="stat-value" id="best-time">0:00</span>
           </div>
         </div>
 

@@ -490,7 +490,7 @@ function closeWelcomeModal(event) {
 function handleWelcomeSubmit(event) {
   event.preventDefault();
 
-  const input = document.getElementById("player-input");
+  const input = document.getElementById("player-input").focus();
   const name = input.value.trim();
 
   if (name !== playerName) {

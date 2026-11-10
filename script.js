@@ -69,14 +69,13 @@ const input = document.getElementById("player-input");
 // ## Game setup
 
 function startGame() {
-  // Start a new game or restart the current one.
-  // Reset game state and cancel pending timers.
-  // Create, shuffle and render a new deck.
-  // Keep the saved best records.
-  // gameState.flippedCards = [];
-  // gameState.matchedPairs = 0;
-
   stopTimer();
+
+  clearTimeout(gameState.flipBackTimeoutId);
+  gameState.flipBackTimeoutId = null;
+
+  gameState.hideTimeoutIds.forEach((id) => clearTimeout(id));
+  gameState.hideTimeoutIds = [];
 
   gameState.flippedCards = [];
   gameState.matchedPairs = 0;
@@ -90,7 +89,6 @@ function startGame() {
   gameState.cards = createDeck(CARD_NAMES);
   shuffle(gameState.cards);
   renderCards(gameState.cards);
-  console.log(gameState.cards);
 }
 
 function createDeck(names) {

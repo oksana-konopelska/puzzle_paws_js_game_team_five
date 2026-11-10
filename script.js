@@ -52,6 +52,7 @@ let playerName = "";
 const board = document.getElementById("board");
 const movesEl = document.getElementById("moves");
 const timeEl = document.getElementById("time");
+const restartButton = document.getElementById("restart-button");
 
 const bestMovesEl = document.getElementById("best-moves");
 const bestTimeEl = document.getElementById("best-time");
@@ -370,11 +371,11 @@ function finishGame() {
 
   handleNewRecord();
 
- document.getElementById("success-modal-header-p").textContent =
-  `Congratulations ${playerName}!`;
+  document.getElementById("success-modal-header-p").textContent =
+    `Congratulations ${playerName}!`;
 
-document.getElementById("modal-sub-p").textContent =
-  "You matched all the cards";
+  document.getElementById("modal-sub-p").textContent =
+    "You matched all the cards";
 
   successMovesEl.textContent = gameState.moves;
 
@@ -384,9 +385,7 @@ document.getElementById("modal-sub-p").textContent =
     bestRecords.moves !== null ? bestRecords.moves : "-";
 
   bestTimeEl.textContent =
-    bestRecords.time !== null
-      ? formatTime(bestRecords.time)
-      : "-";
+    bestRecords.time !== null ? formatTime(bestRecords.time) : "-";
 
   const successModal = document.getElementById("success-modal");
 
@@ -455,6 +454,10 @@ function init() {
   });
   playAgainButton.addEventListener("click", function () {
     successModal.classList.remove("open-modal");
+    startGame();
+  });
+
+  restartButton.addEventListener("click", function () {
     startGame();
   });
 }

@@ -369,9 +369,8 @@ function finishGame() {
 
   handleNewRecord();
 
-  document.getElementById(
-    "success-modal-header-p"
-  ).textContent = `Congratulations ${playerName}!`;
+  document.getElementById("success-modal-header-p").textContent =
+    `Congratulations ${playerName}!`;
 
   document.getElementById("modal-sub-p").textContent =
     "You matched all the cards";
@@ -425,8 +424,9 @@ function init() {
   document.addEventListener("keydown", closeWelcomeModal);
 
   board.addEventListener("click", function (event) {
-    const button = event.target.closest("button");
-    handleCardClick(button);
+    const cardEl = event.target.closest(".card");
+    if (!cardEl) return;
+    handleCardClick(cardEl);
   });
 
   const savedName = loadPlayerName();

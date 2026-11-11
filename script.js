@@ -369,8 +369,9 @@ function finishGame() {
 
   handleNewRecord();
 
-  document.getElementById("success-modal-header-p").textContent =
-    `Congratulations ${playerName}!`;
+  document.getElementById(
+    "success-modal-header-p"
+  ).textContent = `Congratulations ${playerName}!`;
 
   document.getElementById("modal-sub-p").textContent =
     "You matched all the cards";
@@ -411,6 +412,7 @@ document.addEventListener("click", function (event) {
   ) {
     event.preventDefault();
     closeSuccessModal();
+    startGame();
   }
 });
 function init() {

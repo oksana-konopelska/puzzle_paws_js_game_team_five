@@ -307,6 +307,7 @@ body {
   margin-bottom: 13px;
 }
 
+
 .best-heading {
   grid-column: 4;
   display: flex;
@@ -411,9 +412,14 @@ body {
 }
 
 .btn-restart {
+  margin-top: 1.8rem;
   background: transparent;
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 
 .btn-restart:hover {
   background: var(--pink-dark);
@@ -472,6 +478,7 @@ body {
   margin-top: 20px;
 }
 
+
 .modal-header-p {
   color: var(--text-color);
   margin-top: 0;
@@ -528,6 +535,22 @@ body {
   display: flex;
 }
 
+#success-modal-header-p,
+#success-modal-header-line-one {
+  margin-top: 1rem;
+  font-size: large;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+}
+
+#success-modal-header-p {
+  color: var(--color-button);
+}
+
+.player-name {
+  font-weight: 700;
+}
+
 .tooltip {
   position: relative;
   display: inline-block;
@@ -556,6 +579,8 @@ body {
 .tooltip:hover .tooltip-text {
   visibility: visible;
 }
+
+
 
 /* Responsive design */
 
@@ -587,16 +612,13 @@ body {
     grid-template-columns: 55px 1fr 1fr 1fr;
   }
 
-  .results-heading {
-    grid-template-columns: 30px 1fr 1fr 1fr;
-  }
+
 
   .trophy {
     right: -20px;
     font-size: 35px;
   }
 }
-
 
 @media (max-width: 1032px) {
   /* .player-info {

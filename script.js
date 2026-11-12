@@ -344,7 +344,7 @@ function showSuccessModal() {
   const successHeader = document.getElementById("success-modal-header-p");
 
   if (successHeader)
-    successHeader.textContent = `Congratulations ${playerName}!`;
+    successHeader.textContent = `Good work ${playerName}!`;
 
   if (successMovesEl) successMovesEl.textContent = gameState.moves;
   if (successTimeEl) successTimeEl.textContent = formatTime(gameState.time);

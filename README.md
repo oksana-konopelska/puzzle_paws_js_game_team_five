@@ -2,6 +2,11 @@
 
 Paws Memory Game is a fun and interactive card-matching game where players uncover pairs of animal cards as quickly as possible. The game tracks moves and completion time, stores personal best records using localStorage, and features custom-designed welcome and success modals inspired by a playful pet-themed interface.
 
+LIVE VIEW: https://oksana-konopelska.github.io/puzzle_paws_js_game_team_five/
+
+<img width="300"  alt="puzzle-paws-qr-code" src="https://github.com/user-attachments/assets/a2ab82a5-e494-4af5-ae27-baecb6f4d7f7" />
+
+
 ## Table of Contents
 
 - [Features](#features)
@@ -75,7 +80,8 @@ The images used in this game are licensed under [CC BY 4.0](#license)
 ### Success Screen
 View your results and compare them with your best records.
 
-<img width="300"  alt="Success page" src="https://github.com/user-attachments/assets/5495ba14-501f-4179-ab3b-6f5e4fbe97ff" />
+<img width="300"  alt="Success page" src="https://github.com/user-attachments/assets/4eaa0857-3f13-4785-a19a-d8d49e77d97c" />
+
 
 
 ## User Testing & Feedback

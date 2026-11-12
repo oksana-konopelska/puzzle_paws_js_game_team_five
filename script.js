@@ -3,7 +3,6 @@ const FLIP_BACK_DELAY_MS = 600;
 const CORRECT_DELAY_MS = 1400;
 const BEST_RECORDS_KEY = "memoryBest";
 const PLAYER_KEY = "memoryPlayerName";
-const playerNewName = document.getElementById("player-name");
 
 const CARD_NAMES = [
   "bear",
@@ -16,19 +15,7 @@ const CARD_NAMES = [
   "squirrel",
 ];
 
-const CARD_NAMES_FLOWERS = [
-  "sunflower",
-  "hortensia",
-  "tulip",
-  "lilac",
-  "camomille",
-  "piony",
-  "rose",
-  "daizy",
-];
-
 const gameState = {
-  // cards:  createDeck(CARD_NAMES),
   cards: [],
   flippedCards: [],
   matchedPairs: 0,
@@ -39,8 +26,6 @@ const gameState = {
   flipBackTimeoutId: null,
   hideTimeoutIds: [],
 };
-
-console.log(gameState.cards);
 
 const bestRecords = {
   moves: null,
@@ -53,6 +38,7 @@ const board = document.getElementById("board");
 const movesEl = document.getElementById("moves");
 const timeEl = document.getElementById("time");
 const restartButton = document.getElementById("restart-button");
+const playerNewName = document.getElementById("player-name");
 
 const bestMovesEl = document.getElementById("best-moves");
 const bestTimeEl = document.getElementById("best-time");
@@ -67,8 +53,6 @@ const welcomeForm = document.getElementById("modal-form");
 const successModal = document.getElementById("success-modal");
 const closeSuccessButton = document.getElementById("close-success-modal");
 const playAgainButton = document.getElementById("play-again-btn");
-
-// ## Game setup
 
 function startGame() {
   stopTimer();
@@ -89,7 +73,7 @@ function startGame() {
   updateTime();
 
   gameState.cards = createDeck(CARD_NAMES);
-  // shuffle(gameState.cards);
+
   renderCards(gameState.cards);
 }
 
@@ -111,8 +95,6 @@ function createDeck(names) {
 }
 
 function shuffle(array) {
-  // Randomize the array in place.
-
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -125,15 +107,6 @@ function renderCards(cards) {
     board.appendChild(createCard(card));
   });
 }
-// <button class="card" data-id="1"
-// >
-//   <div class="card-inner">
-//     <div class="card-front">
-//       <img src="assets/animals/bear.svg" />
-//     </div>
-//     <div class="card-back"></div>
-//   </div>
-// </button>
 
 function createCard(card) {
   const cardButton = document.createElement("button");
@@ -162,14 +135,6 @@ function createCard(card) {
   return cardButton;
 }
 
-//     card =    {
-//   "id": 6,
-//   "name": "fox",
-//   "isMatched": false,
-//   "isFlipped": true,
-//   "isHidden": false
-// }
-
 function updateCardElement(cardEl, card) {
   cardEl.classList.toggle("flipped", card.isFlipped);
   cardEl.classList.toggle("correct", card.isMatched && !card.isHidden);
@@ -177,15 +142,10 @@ function updateCardElement(cardEl, card) {
 }
 
 function refreshCard(card) {
-  // Find the corresponding DOM element and update it.
   const cardEl = document.querySelector(`#board [data-id="${card.id}"]`);
 
   updateCardElement(cardEl, card);
-
-  console.log(cardEl);
 }
-
-// ## Game logic
 
 function handleCardClick(cardEl) {
   const card = gameState.cards.find(function (card) {
@@ -213,12 +173,9 @@ function handleCardClick(cardEl) {
 }
 
 function flipBackWrongCards() {
-  // Turn the unmatched cards face down.
-  // Clear the relevant timeout and update the state.
   clearTimeout(gameState.flipBackTimeoutId);
   gameState.flipBackTimeoutId = null;
   gameState.flippedCards.forEach(function (card) {
-    // card.isFaceUp = false;
     card.isFlipped = true;
     refreshCard(card);
   });
@@ -262,63 +219,33 @@ function checkPairs() {
 
     gameState.hideTimeoutIds.push(timeOut);
   } else {
-    // firstCard.isFlipped = true;
-    // secondCard.isFlipped = true;
-
     gameState.flipBackTimeoutId = setTimeout(
       flipBackWrongCards,
       FLIP_BACK_DELAY_MS
     );
   }
-
-  console.log(firstCard.name, secondCard.name);
-  // Count the move and compare the selected cards.
-  // Handle matching and nonmatching pairs.
-  // Hide matched pairs after a delay.
-  // Finish the game when all pairs are found.
 }
 
-// function updateMoves() {
-//   // let moves = 0;
-//   // moves = Math.floor(click / 2);
-//   movesEl.innerHTML = gameState.moves;
-// }
-
-// Timer
-
 function padStart(value) {
-  //Formats numbers to always have at least two digits
   return String(value).padStart(2, "0");
 }
 
 function startTimer() {
-  // Start tracking elapsed time from the first move.
-  // Update the displayed time periodically.
-
   gameState.startTime = Date.now();
   gameState.timerId = setInterval(function () {
     gameState.time = Math.floor((Date.now() - gameState.startTime) / 1000);
 
     updateTime();
   }, 1000);
-
-  //I set onclick to the first card, so if you click on it, the timer will begin
-  //just for testing purposes
 }
 
 function stopTimer() {
-  // Stop the timer.
-
   clearInterval(gameState.timerId);
   gameState.timerId = null;
-  //I set onclick to the timer, so if you click on the timer, it will stop.
-  //just for testing purposes
   gameState.startTime = null;
 }
 
 function formatTime(totalSeconds) {
-  // Return the time in mm:ss format.
-
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
 
@@ -326,11 +253,8 @@ function formatTime(totalSeconds) {
 }
 
 function updateTime() {
-  // Update the time display.
   timeEl.textContent = formatTime(gameState.time);
 }
-
-// ## Best records
 
 function loadBest() {
   const savedRecords = localStorage.getItem(BEST_RECORDS_KEY);
@@ -429,43 +353,36 @@ function showSuccessModal() {
 }
 
 function initEventListeners() {
-  // Welcome modal close button
   if (closeWelcomeButton) {
     closeWelcomeButton.addEventListener("click", () => {
       closeModal(welcomeModal);
     });
   }
 
-  // Welcome form
   if (welcomeForm) {
     welcomeForm.addEventListener("submit", handleWelcomeSubmit);
   }
 
-  // Player name button
   if (playerNewName) {
     playerNewName.addEventListener("click", handlePlayerNameClick);
   }
 
-  // Success modal close button
   if (closeSuccessButton) {
     closeSuccessButton.addEventListener("click", () => {
       closeModal(successModal);
     });
   }
 
-  // Play again button
   if (playAgainButton) {
     playAgainButton.addEventListener("click", () => {
       closeModal(successModal);
     });
   }
 
-  // Restart button
   if (restartButton) {
     restartButton.addEventListener("click", startGame);
   }
 
-  // Click on success modal background
   if (successModal) {
     successModal.addEventListener("click", (event) => {
       if (event.target === successModal) {
@@ -474,7 +391,6 @@ function initEventListeners() {
     });
   }
 
-  // Click on welcome modal background
   if (welcomeModal) {
     welcomeModal.addEventListener("click", (event) => {
       if (event.target === welcomeModal) {
@@ -482,7 +398,7 @@ function initEventListeners() {
       }
     });
   }
-  // Escape key
+
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       closeModal(welcomeModal);
@@ -490,7 +406,6 @@ function initEventListeners() {
     }
   });
 
-  // Memory cards (event delegation)
   if (board) {
     board.addEventListener("click", (event) => {
       const cardEl = event.target.closest(".card");

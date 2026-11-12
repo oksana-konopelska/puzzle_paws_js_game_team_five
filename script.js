@@ -59,12 +59,14 @@ const bestTimeEl = document.getElementById("best-time");
 const successMovesEl = document.getElementById("success-moves");
 const successTimeEl = document.getElementById("success-time");
 
-// modal variable
 const welcomeModal = document.getElementById("welcome-modal");
 const closeWelcomeButton = document.getElementById("close-welcome-btn");
-const input = document.getElementById("player-input");
+const welcomeInput = document.getElementById("player-input");
+const welcomeForm = document.getElementById("modal-form");
 
-// let click = 0;
+const successModal = document.getElementById("success-modal");
+const closeSuccessButton = document.getElementById("close-success-modal");
+const playAgainButton = document.getElementById("play-again-btn");
 
 // ## Game setup
 
@@ -87,7 +89,7 @@ function startGame() {
   updateTime();
 
   gameState.cards = createDeck(CARD_NAMES);
-  shuffle(gameState.cards);
+  // shuffle(gameState.cards);
   renderCards(gameState.cards);
 }
 
@@ -364,105 +366,18 @@ function updateBest() {
     bestRecords.time !== null ? formatTime(bestRecords.time) : "-";
 }
 
-function finishGame() {
-  stopTimer();
-
-  handleNewRecord();
-
-  document.getElementById("success-modal-header-p").textContent =
-    `Congratulations ${playerName}!`;
-
-  document.getElementById("modal-sub-p").textContent =
-    "You matched all the cards";
-
-  successMovesEl.textContent = gameState.moves;
-
-  successTimeEl.textContent = formatTime(gameState.time);
-
-  bestMovesEl.textContent =
-    bestRecords.moves !== null ? bestRecords.moves : "-";
-
-  bestTimeEl.textContent =
-    bestRecords.time !== null ? formatTime(bestRecords.time) : "-";
-
-  const successModal = document.getElementById("success-modal");
-
-  if (successModal) {
-    successModal.classList.add("open-modal");
-  }
+function openModal(modalEl) {
+  if (modalEl) modalEl.classList.add("open-modal");
 }
 
-// handleNewRecord();
-// Stop the timer and finalize elapsed time.
-// Display the success message and handle the final records.
-
-function closeSuccessModal() {
-  const successModal = document.getElementById("success-modal");
-
-  if (successModal) {
-    successModal.classList.remove("open-modal");
-  }
-}
-
-document.addEventListener("click", function (event) {
-  if (
-    event.target.id === "success-modal" ||
-    event.target.closest("#close-success-modal")
-  ) {
-    event.preventDefault();
-    closeSuccessModal();
-    startGame();
-  }
-});
-function init() {
-  playerNewName.addEventListener("click", handlePlayerNameClick);
-
-  startGame();
-  loadBest();
-
-  welcomeModal.addEventListener("click", closeWelcomeModal);
-  document.addEventListener("keydown", closeWelcomeModal);
-
-  board.addEventListener("click", function (event) {
-    const cardEl = event.target.closest(".card");
-    if (!cardEl) return;
-    handleCardClick(cardEl);
-  });
-
-  const savedName = loadPlayerName();
-
-  if (!savedName) {
-    showWelcomeModal();
-  } else {
-    playerName = savedName;
-    playerNewName.textContent = savedName;
-  }
-
-  const welcomeForm = document.getElementById("modal-form");
-  welcomeForm.addEventListener("submit", handleWelcomeSubmit);
-
-  const successModal = document.getElementById("success-modal");
-
-  const closeSuccessButton = document.getElementById("close-success-modal");
-
-  const playAgainButton = document.getElementById("play-again-btn");
-
-  successModal.addEventListener("click", function (event) {
-    if (event.target === successModal || event.target === closeSuccessButton) {
-      successModal.classList.remove("open-modal");
+function closeModal(modalEl) {
+  if (modalEl) {
+    modalEl.classList.remove("open-modal");
+    if (modalEl === successModal) {
+      startGame();
     }
-  });
-  playAgainButton.addEventListener("click", function () {
-    successModal.classList.remove("open-modal");
-    startGame();
-  });
-
-  restartButton.addEventListener("click", function () {
-    startGame();
-  });
+  }
 }
-
-init();
 
 function loadPlayerName() {
   return localStorage.getItem(PLAYER_KEY);
@@ -473,43 +388,136 @@ function savePlayerName(name) {
 }
 
 function showWelcomeModal() {
-  welcomeModal.classList.add("open-modal");
-  input.focus();
+  if (welcomeInput) welcomeInput.value = playerName;
+  openModal(welcomeModal);
+  if (welcomeInput) welcomeInput.focus();
 }
-
-function closeWelcomeModal(event) {
-  console.log(event.key);
-  if (
-    event.target === welcomeModal ||
-    event.target === closeWelcomeButton ||
-    event.key === "Escape"
-  ) {
-    welcomeModal.classList.remove("open-modal");
-  }
-}
-
-// showStatsModal();
-
-// closeStatsModal();
 
 function handleWelcomeSubmit(event) {
   event.preventDefault();
-  const name = input.value.trim();
-
+  const name = welcomeInput.value.trim();
   if (name !== playerName) {
-    // resetGameStats();
     startGame();
-
     savePlayerName(name);
     playerName = name;
-    playerNewName.textContent = name;
+    if (playerNewName) playerNewName.textContent = name;
   }
 
-  welcomeModal.classList.remove("open-modal");
+  closeModal(welcomeModal);
 }
 
 function handlePlayerNameClick() {
-  input.value = playerName;
-
   showWelcomeModal();
 }
+
+function finishGame() {
+  stopTimer();
+  handleNewRecord();
+  showSuccessModal();
+}
+
+function showSuccessModal() {
+  const successHeader = document.getElementById("success-modal-header-p");
+
+  if (successHeader)
+    successHeader.textContent = `Congratulations ${playerName}!`;
+
+  if (successMovesEl) successMovesEl.textContent = gameState.moves;
+  if (successTimeEl) successTimeEl.textContent = formatTime(gameState.time);
+
+  openModal(successModal);
+}
+
+function initEventListeners() {
+  // Welcome modal close button
+  if (closeWelcomeButton) {
+    closeWelcomeButton.addEventListener("click", () => {
+      closeModal(welcomeModal);
+    });
+  }
+
+  // Welcome form
+  if (welcomeForm) {
+    welcomeForm.addEventListener("submit", handleWelcomeSubmit);
+  }
+
+  // Player name button
+  if (playerNewName) {
+    playerNewName.addEventListener("click", handlePlayerNameClick);
+  }
+
+  // Success modal close button
+  if (closeSuccessButton) {
+    closeSuccessButton.addEventListener("click", () => {
+      closeModal(successModal);
+    });
+  }
+
+  // Play again button
+  if (playAgainButton) {
+    playAgainButton.addEventListener("click", () => {
+      closeModal(successModal);
+    });
+  }
+
+  // Restart button
+  if (restartButton) {
+    restartButton.addEventListener("click", startGame);
+  }
+
+  // Click on success modal background
+  if (successModal) {
+    successModal.addEventListener("click", (event) => {
+      if (event.target === successModal) {
+        closeModal(successModal);
+      }
+    });
+  }
+
+  // Click on welcome modal background
+  if (welcomeModal) {
+    welcomeModal.addEventListener("click", (event) => {
+      if (event.target === welcomeModal) {
+        closeModal(welcomeModal);
+      }
+    });
+  }
+  // Escape key
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeModal(welcomeModal);
+      closeModal(successModal);
+    }
+  });
+
+  // Memory cards (event delegation)
+  if (board) {
+    board.addEventListener("click", (event) => {
+      const cardEl = event.target.closest(".card");
+
+      if (!cardEl || !board.contains(cardEl)) return;
+
+      handleCardClick(cardEl);
+    });
+  }
+}
+
+function init() {
+  startGame();
+  loadBest();
+  initEventListeners();
+
+  const savedName = loadPlayerName();
+
+  if (!savedName) {
+    showWelcomeModal();
+  } else {
+    playerName = savedName;
+
+    if (playerNewName) {
+      playerNewName.textContent = savedName;
+    }
+  }
+}
+
+init();

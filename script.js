@@ -73,7 +73,7 @@ function startGame() {
   updateTime();
 
   gameState.cards = createDeck(CARD_NAMES);
-
+  shuffle(gameState.cards);
   renderCards(gameState.cards);
 }
 

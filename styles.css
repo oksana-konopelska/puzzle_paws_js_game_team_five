@@ -218,6 +218,164 @@ body {
   object-fit: contain;
 }
 
+.success-modal {
+  width: 100%;
+  max-width: 670px;
+  min-height: 541px;
+  background-color: #fff0f7;
+  border-radius: 20px;
+  position: relative;
+  padding: 45px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Close button */
+
+.close-btn {
+  position: absolute;
+  top: 19px;
+  right: 21px;
+  width: 28px;
+  height: 28px;
+  line-height: 19px;
+  cursor: pointer;
+}
+
+/* Header */
+
+.success-header {
+  text-align: center;
+}
+
+.success-header h1 {
+  font-size: 66px;
+  font-weight: 900;
+  color: #ff91c9;
+  letter-spacing: 1px;
+  text-shadow: -2px 2px 0 #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.paw-icon {
+  font-size: 49px;
+  text-shadow: none;
+}
+
+.congratulations {
+  font-size: 15px;
+  margin-top: 17px;
+  color: #111;
+}
+
+.player-name {
+  color: #ed54a5;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 11px;
+}
+
+/* Results section */
+
+.results {
+  width: 100%;
+  max-width: 380px;
+  margin-top: 42px;
+  position: relative;
+}
+
+/* Table headings */
+
+.results-heading {
+  display: grid;
+  grid-template-columns: 65px 1fr 1fr 1fr;
+  align-items: end;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 13px;
+}
+
+.best-heading {
+  grid-column: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.crown {
+  width: 22.014px;
+  height: 16.765px;
+}
+
+/* Result rows */
+
+.result-row {
+  height: 57px;
+  border: 1px solid #ec42c8;
+  border-radius: 7px;
+  display: grid;
+  grid-template-columns: 65px 1fr 1fr 1fr;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 9px;
+  position: relative;
+  font-size: 12px;
+  color: #111;
+}
+
+.result-row strong {
+  text-align: left;
+  font-size: 12px;
+}
+
+.result-icon {
+  width: 36px;
+  padding-left: 10px;
+}
+
+.best-value {
+  padding-right: 5px;
+}
+
+/* Trophy */
+
+.trophy {
+  position: absolute;
+  right: -27px;
+  top: -12px;
+  transform: rotate(10deg);
+
+  width: 48px;
+  height: 43px;
+}
+
+/* Restart button */
+
+.restart-btn {
+  width: 48px;
+  height: 48px;
+  margin-top: 39px;
+  border: none;
+  border-radius: 50%;
+  background-color: #ff91ca;
+  color: white;
+  font-size: 43px;
+  line-height: 42px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #e45ca7;
+  transition: transform 0.2s ease;
+}
+
+.restart-btn:hover {
+  transform: rotate(-45deg);
+}
+
 .btn {
   margin: auto;
   display: block;
@@ -225,8 +383,7 @@ body {
   color: white;
   border: none;
   border-radius: 8px;
-  box-shadow:
-    -1.403px -2.245px 1.122px 0 #e061a4 inset,
+  box-shadow: -1.403px -2.245px 1.122px 0 #e061a4 inset,
     1.683px 1.122px 4.209px 0 #ff96cd inset;
   transition: transform 0.1s ease;
   font-family: "Inter", sans-serif;
@@ -238,8 +395,7 @@ body {
 
   &:hover {
     background-color: var(--color-button-pressed);
-    box-shadow:
-      1px 2px 6.5px 0 rgba(0, 0, 0, 0.22),
+    box-shadow: 1px 2px 6.5px 0 rgba(0, 0, 0, 0.22),
       3.813px 3.813px 7.626px 0 rgba(255, 255, 255, 0.25) inset,
       -3.813px -3.813px 9.532px 0 rgba(0, 0, 0, 0.2) inset;
   }
@@ -251,6 +407,46 @@ body {
 
 .btn-restart:active {
   transform: scale(0.97);
+}
+
+/* Responsive design */
+
+@media (max-width: 480px) {
+  .success-modal {
+    min-height: 100vh;
+    border-radius: 0;
+    padding: 65px 20px 30px;
+  }
+
+  .success-header h1 {
+    font-size: 52px;
+  }
+
+  .paw-icon {
+    font-size: 40px;
+  }
+
+  .congratulations {
+    font-size: 13px;
+  }
+
+  .results {
+    max-width: 350px;
+    margin-top: 45px;
+  }
+
+  .result-row {
+    grid-template-columns: 55px 1fr 1fr 1fr;
+  }
+
+  .results-heading {
+    grid-template-columns: 30px 1fr 1fr 1fr;
+  }
+
+  .trophy {
+    right: -20px;
+    font-size: 35px;
+  }
 }
 
 @media (max-width: 1032px) {
@@ -340,7 +536,7 @@ body {
 }
 
 #modal-header-logo {
-  width: 418px;
+  width: 300px;
   height: auto;
   margin-bottom: 12px;
   margin-top: 20px;

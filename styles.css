@@ -103,7 +103,7 @@ body {
 .clickable-name {
   cursor: pointer;
   font-weight: 600;
-  /* text-decoration: underline; */
+
   color: var(--color-button-pressed);
 }
 
@@ -241,6 +241,8 @@ body {
   height: 28px;
   line-height: 19px;
   cursor: pointer;
+  background-color: transparent;
+  border: none;
 }
 
 /* Header */
@@ -383,7 +385,8 @@ body {
   color: white;
   border: none;
   border-radius: 8px;
-  box-shadow: -1.403px -2.245px 1.122px 0 #e061a4 inset,
+  box-shadow:
+    -1.403px -2.245px 1.122px 0 #e061a4 inset,
     1.683px 1.122px 4.209px 0 #ff96cd inset;
   transition: transform 0.1s ease;
   font-family: "Inter", sans-serif;
@@ -395,10 +398,16 @@ body {
 
   &:hover {
     background-color: var(--color-button-pressed);
-    box-shadow: 1px 2px 6.5px 0 rgba(0, 0, 0, 0.22),
+    box-shadow:
+      1px 2px 6.5px 0 rgba(0, 0, 0, 0.22),
       3.813px 3.813px 7.626px 0 rgba(255, 255, 255, 0.25) inset,
       -3.813px -3.813px 9.532px 0 rgba(0, 0, 0, 0.2) inset;
   }
+}
+
+.btn-restart {
+  background: transparent;
+  border: none;
 }
 
 .btn-restart:hover {
@@ -510,7 +519,7 @@ body {
   z-index: 9999;
 }
 
-#modal-div {
+.modal-div {
   background-color: var(--bg-modal);
   width: 90%;
   height: auto;
@@ -535,14 +544,14 @@ body {
   display: flex;
 }
 
-#modal-header-logo {
+.modal-header-logo {
   width: 300px;
   height: auto;
   margin-bottom: 12px;
   margin-top: 20px;
 }
 
-#modal-header-p {
+.modal-header-p {
   color: var(--text-color);
   margin-top: 0;
   font-size: 13px;
@@ -550,7 +559,7 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-#label-icon {
+.label-icon {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -560,7 +569,7 @@ body {
   margin-top: -20px;
 }
 
-#label-name {
+.label-name {
   color: var(--text-color);
   font-size: 13px;
   width: 100%;
@@ -568,13 +577,13 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-#modal-form label {
+.modal-form label {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#modal-form input {
+.modal-form input {
   width: 100%;
   max-width: 260px;
   padding: 10px 12px;
@@ -585,7 +594,7 @@ body {
   box-sizing: border-box;
 }
 
-#modal-form {
+.modal-form {
   border-color: var(--color-border);
 }
 

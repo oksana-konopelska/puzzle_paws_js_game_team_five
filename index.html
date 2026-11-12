@@ -44,30 +44,32 @@
     </main>
 
     <div id="welcome-modal" class="modal-overlay">
-      <div id="modal-div">
-        <a class="close-btn" href="#"
-          ><img id="close-welcome-btn" src="assets/icons/close_circle.svg"
-        /></a>
-        <div id="modal-header">
-          <img id="modal-header-logo" src="assets/modal-logo.svg" />
-          <p id="modal-header-p">
+      <div class="modal-div">
+        <button class="close-btn" id="close-welcome-btn">
+          <img src="assets/icons/close_circle.svg" alt="Close modal" />
+        </button>
+        <div class="modal-header">
+          <img
+            class="modal-header-logo"
+            src="assets/modal-logo.svg"
+            alt="logo"
+          />
+          <p class="modal-header-p">
             Find the pairs of cards with the same image.
           </p>
         </div>
 
         <div>
-          <form id="modal-form">
-            <div id="label-icon">
+          <form id="modal-form" class="modal-form">
+            <div class="label-icon">
               <label id="label-name">Enter your name:</label>
-              <a href="#"
-                ><div class="tooltip">
-                  <img src="assets/icons/question-mark-circle.svg" alt="Help" />
-                  <span class="tooltip-text">
-                    Enter your name to save your progress and track your best
-                    scores.
-                  </span>
-                </div>
-              </a>
+              <div class="tooltip">
+                <img src="assets/icons/question-mark-circle.svg" alt="Help" />
+                <span class="tooltip-text">
+                  Enter your name to save your progress and track your best
+                  scores.
+                </span>
+              </div>
             </div>
             <input id="player-input" type="text" />
             <button type="submit" class="btn">Submit</button>
@@ -75,16 +77,16 @@
         </div>
       </div>
     </div>
-    <div id="success-modal" class="modal-overlay">
-      <div id="modal-div">
-        <a id="close-success-modal" class="close-btn" href="#">
-          <img id="close-success-modal" src="assets/icons/close_circle.svg" />
-        </a>
-        <div id="modal-header">
+
+    <div id="success-modal" class="modal-overlay open-modal">
+      <div class="modal-div">
+        <button id="close-success-modal" class="close-btn">
+          <img src="assets/icons/close_circle.svg" alt="Close modal" />
+        </button>
+        <div class="modal-header">
           <img id="modal-header-logo" src="assets/modal-logo.svg" />
-          <!-- <p id="modal-header-p">Congratulations! You matched all the cards</p> -->
           <p id="success-modal-header-p"></p>
-          <p id="modal-sub-p"></p>
+          <p id="modal-sub-p">You matched all the cards</p>
         </div>
         <section class="results">
           <div class="results-heading">
@@ -92,37 +94,48 @@
             <strong>CURRENT</strong>
             <span class="best-heading">
               <span class="crown">
-                <img class="crown" src="assets/icons/crown.svg" />
+                <img
+                  class="crown"
+                  src="assets/icons/crown.svg"
+                  alt="Crown icon"
+                />
               </span>
               BEST
             </span>
           </div>
           <div class="result-row">
             <div>
-              <img class="result-icon" src="assets/icons/move-icon.svg" />
+              <img
+                class="result-icon"
+                src="assets/icons/move-icon.svg"
+                alt="Move icon"
+              />
             </div>
             <strong>MOVES</strong>
             <span id="success-moves">20</span>
             <span id="best-moves">12</span>
             <span>
-              <img class="trophy" src="assets/icons/throphy.svg" />
+              <img
+                class="trophy"
+                src="assets/icons/throphy.svg"
+                alt="Trophy icon"
+              />
             </span>
           </div>
           <div class="result-row">
-            <img class="stat-icon" src="assets/icons/clock.svg" />
+            <img
+              class="stat-icon"
+              src="assets/icons/clock.svg"
+              alt="Clock icon"
+            />
             <strong class="stat-title">TIME</strong>
             <span id="success-time" class="stat-value">0</span>
             <span id="best-time">00:10</span>
           </div>
         </section>
-        <a
-          class="btn-restart"
-          id="play-again-btn"
-          aria-label="Play again"
-          href="#"
-        >
-          <img src="assets/icons/button.svg" />
-        </a>
+        <button class="btn-restart" id="play-again-btn" aria-label="Play again">
+          <img src="assets/icons/button.svg" alt="Restart" />
+        </button>
       </div>
     </div>
   </body>

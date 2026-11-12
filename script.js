@@ -25,6 +25,7 @@ const gameState = {
   timerId: null,
   flipBackTimeoutId: null,
   hideTimeoutIds: [],
+  finishTimeoutId: null,
 };
 
 const bestRecords = {
@@ -62,6 +63,9 @@ function startGame() {
 
   gameState.hideTimeoutIds.forEach((id) => clearTimeout(id));
   gameState.hideTimeoutIds = [];
+
+  clearTimeout(gameState.finishTimeoutId);
+  gameState.finishTimeoutId = null;
 
   gameState.flippedCards = [];
   gameState.matchedPairs = 0;
@@ -143,7 +147,6 @@ function updateCardElement(cardEl, card) {
 
 function refreshCard(card) {
   const cardEl = document.querySelector(`#board [data-id="${card.id}"]`);
-
   updateCardElement(cardEl, card);
 }
 
@@ -164,7 +167,6 @@ function handleCardClick(cardEl) {
 
   card.isFlipped = false;
   updateCardElement(cardEl, card);
-
   gameState.flippedCards.push(card);
 
   if (gameState.flippedCards.length === 2) {
@@ -183,8 +185,7 @@ function flipBackWrongCards() {
 }
 
 function updateMoves() {
-  movesEl.innerHTML = gameState.moves;
-  localStorage.setItem("currentMoves", gameState.moves);
+  movesEl.textContent = gameState.moves;
 }
 
 function checkPairs() {
@@ -204,12 +205,13 @@ function checkPairs() {
     gameState.flippedCards = [];
 
     if (gameState.matchedPairs === CARD_NAMES.length) {
-      setTimeout(function () {
+      stopTimer();
+      gameState.finishTimeoutId = setTimeout(function () {
         finishGame();
       }, CORRECT_DELAY_MS);
     }
 
-    let timeOut = setTimeout(function () {
+    const timeOut = setTimeout(function () {
       firstCard.isHidden = true;
       secondCard.isHidden = true;
 
@@ -290,6 +292,14 @@ function updateBest() {
     bestRecords.time !== null ? formatTime(bestRecords.time) : "-";
 }
 
+function loadPlayerName() {
+  return localStorage.getItem(PLAYER_KEY);
+}
+
+function savePlayerName(name) {
+  localStorage.setItem(PLAYER_KEY, name);
+}
+
 function openModal(modalEl) {
   if (modalEl) modalEl.classList.add("open-modal");
 }
@@ -303,18 +313,22 @@ function closeModal(modalEl) {
   }
 }
 
-function loadPlayerName() {
-  return localStorage.getItem(PLAYER_KEY);
-}
-
-function savePlayerName(name) {
-  localStorage.setItem(PLAYER_KEY, name);
-}
-
 function showWelcomeModal() {
   if (welcomeInput) welcomeInput.value = playerName;
   openModal(welcomeModal);
   if (welcomeInput) welcomeInput.focus();
+}
+
+function showSuccessModal() {
+  const successHeader = document.getElementById("success-modal-header-p");
+
+  if (successHeader)
+    successHeader.textContent = `Congratulations ${playerName}!`;
+
+  if (successMovesEl) successMovesEl.textContent = gameState.moves;
+  if (successTimeEl) successTimeEl.textContent = formatTime(gameState.time);
+
+  openModal(successModal);
 }
 
 function handleWelcomeSubmit(event) {
@@ -336,35 +350,36 @@ function handlePlayerNameClick() {
 
 function finishGame() {
   stopTimer();
+  loadBest();
   handleNewRecord();
   showSuccessModal();
 }
 
-function showSuccessModal() {
-  const successHeader = document.getElementById("success-modal-header-p");
-
-  if (successHeader)
-    successHeader.textContent = `Congratulations ${playerName}!`;
-
-  if (successMovesEl) successMovesEl.textContent = gameState.moves;
-  if (successTimeEl) successTimeEl.textContent = formatTime(gameState.time);
-
-  openModal(successModal);
-}
-
 function initEventListeners() {
+  if (playerNewName) {
+    playerNewName.addEventListener("click", handlePlayerNameClick);
+  }
+
+  if (restartButton) {
+    restartButton.addEventListener("click", startGame);
+  }
+
   if (closeWelcomeButton) {
     closeWelcomeButton.addEventListener("click", () => {
       closeModal(welcomeModal);
     });
   }
 
-  if (welcomeForm) {
-    welcomeForm.addEventListener("submit", handleWelcomeSubmit);
+  if (welcomeModal) {
+    welcomeModal.addEventListener("click", (event) => {
+      if (event.target === welcomeModal) {
+        closeModal(welcomeModal);
+      }
+    });
   }
 
-  if (playerNewName) {
-    playerNewName.addEventListener("click", handlePlayerNameClick);
+  if (welcomeForm) {
+    welcomeForm.addEventListener("submit", handleWelcomeSubmit);
   }
 
   if (closeSuccessButton) {
@@ -379,22 +394,10 @@ function initEventListeners() {
     });
   }
 
-  if (restartButton) {
-    restartButton.addEventListener("click", startGame);
-  }
-
   if (successModal) {
     successModal.addEventListener("click", (event) => {
       if (event.target === successModal) {
         closeModal(successModal);
-      }
-    });
-  }
-
-  if (welcomeModal) {
-    welcomeModal.addEventListener("click", (event) => {
-      if (event.target === welcomeModal) {
-        closeModal(welcomeModal);
       }
     });
   }
@@ -419,7 +422,6 @@ function initEventListeners() {
 
 function init() {
   startGame();
-  loadBest();
   initEventListeners();
 
   const savedName = loadPlayerName();

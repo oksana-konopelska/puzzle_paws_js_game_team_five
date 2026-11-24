@@ -6,8 +6,6 @@ Paws Memory Game is a fun and interactive card-matching game where players uncov
 
 LIVE VIEW: https://oksana-konopelska.github.io/puzzle_paws_js_game_team_five/
 
-<img width="300"  alt="puzzle-paws-qr-code" src="https://github.com/user-attachments/assets/a2ab82a5-e494-4af5-ae27-baecb6f4d7f7" />
-
 
 ## Table of Contents
 
